@@ -10,10 +10,7 @@
 var isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
-  if (o == null) {
-    return {};
-  }
-  if (o && !isObject(o)) {
+  if (o == null || !isObject(o)) {
     return {};
   }
   if (prop == null) {
@@ -28,7 +25,7 @@ module.exports = function getValue(o, prop) {
     var key = path[i];
     o = o[key];
     if (o == null) {
-      return null;
+      return {};
     }
   }
   return o[last];
