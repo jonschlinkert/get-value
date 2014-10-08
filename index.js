@@ -9,7 +9,8 @@
 
 var isObject = require('isobject');
 
-module.exports = function getValue(o, prop) {
+module.exports = function getValue(o, prop, cb) {
+  var arr = [].slice.call(arguments);
   if (o == null || !isObject(o)) {
     return {};
   }
@@ -17,7 +18,11 @@ module.exports = function getValue(o, prop) {
     return o;
   }
 
-  var path = prop.split('.');
+  if (typeof cb === 'function') {
+    fn = cb;
+  }
+
+  var path = fn(prop);
   var last = path.pop();
   var len = path.length;
 
@@ -30,3 +35,7 @@ module.exports = function getValue(o, prop) {
   }
   return o[last];
 };
+
+function fn(str) {
+  return str.split('.');
+}
