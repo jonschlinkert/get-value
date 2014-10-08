@@ -10,9 +10,15 @@
 var isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
-  if (o == null) return {};
-  if (o && !isObject(o)) return {};
-  if (prop == null) return o;
+  if (o == null) {
+    return {};
+  }
+  if (o && !isObject(o)) {
+    return {};
+  }
+  if (prop == null) {
+    return o;
+  }
 
   var path = prop.split('.');
   var last = path.pop();
