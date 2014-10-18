@@ -7,6 +7,13 @@
   - [get-property](https://github.com/jonschlinkert/get-property)
   - [get-object](https://github.com/jonschlinkert/get-object)
 
+
+## Benchmarks
+
+```bash
+node benchmark
+```
+
 ## Usage
 
 ```js

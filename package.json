@@ -28,6 +28,8 @@
     "test": "mocha -R spec"
   },
   "devDependencies": {
+    "benchmarked": "^0.1.1",
+    "getobject": "^0.1.0",
     "mocha": "*",
     "should": "^4.0.4",
     "verb": ">= 0.2.6",
