@@ -9,33 +9,55 @@
 
 var isObject = require('isobject');
 
-module.exports = function getValue(o, prop, cb) {
-  var arr = [].slice.call(arguments);
-  if (o == null || !isObject(o)) {
+module.exports = function getValue(obj, str, fn) {
+  if (obj == null || !isObject(obj)) {
     return {};
   }
-  if (prop == null) {
-    return o;
+
+  if (str == null || typeof str !== 'string') {
+    return obj;
   }
 
-  if (typeof cb === 'function') {
-    fn = cb;
+  var path;
+
+  if (fn && typeof fn === 'function') {
+    path = fn(str);
+  } else if (fn === true) {
+    str = replaceStr(str, '\\.', '___DOT___');
+    path = str.split('.').map(function (seg) {
+      return replaceStr(seg, '___DOT___', '.');
+    });
+  } else {
+    path = str.split('.');
   }
 
-  var path = fn(prop);
-  var last = path.pop();
   var len = path.length;
+  var i = 0;
+  var last;
 
-  for (var i = 0; i < len; i++) {
+  while(i < len) {
     var key = path[i];
-    o = o[key];
-    if (o == null) {
+    last = obj[key];
+    if (last == null) {
       return {};
     }
+    if (typeof last === 'object') {
+      obj = last;
+    }
+    i++;
   }
-  return o[last];
+  return last;
 };
 
-function fn(str) {
-  return str.split('.');
+function replaceStr(str, pattern, replacement) {
+  var i, from = 0;
+  while (str.indexOf(pattern, from) !== -1) {
+    i = str.indexOf(pattern, from);
+    from = i + pattern.length;
+    str = str.substr(0, i)
+      + replacement
+      + str.substr(from, str.length);
+    from = i + replacement.length;
+  }
+  return str;
 }

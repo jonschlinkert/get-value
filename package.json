@@ -1,7 +1,7 @@
 {
   "name": "get-value",
   "description": "Use property paths (`a.b.c`) get a nested value from an object.",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "homepage": "https://github.com/jonschlinkert/get-value",
   "author": {
     "name": "Jon Schlinkert",
@@ -34,6 +34,7 @@
     "verb-tag-jscomments": ">= 0.2.0"
   },
   "keywords": [
+    "get",
     "key",
     "nested",
     "object",
@@ -43,6 +44,7 @@
     "properties",
     "property",
     "props",
+    "segment",
     "util",
     "utilities",
     "utility",
