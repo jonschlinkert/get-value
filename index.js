@@ -39,7 +39,7 @@ module.exports = function getValue(obj, str, fn) {
     var key = path[i];
     last = obj[key];
     if (last == null) {
-      return {};
+      return null;
     }
     if (typeof last === 'object') {
       obj = last;
@@ -50,14 +50,11 @@ module.exports = function getValue(obj, str, fn) {
 };
 
 function replaceStr(str, pattern, replacement) {
-  var i, from = 0;
-  while (str.indexOf(pattern, from) !== -1) {
-    i = str.indexOf(pattern, from);
-    from = i + pattern.length;
-    str = str.substr(0, i)
-      + replacement
-      + str.substr(from, str.length);
-    from = i + replacement.length;
+  var i = str.indexOf(pattern);
+  var end = i + pattern.length;
+  str = str.substr(0, i) + replacement + str.substr(end, str.length);
+  if (str.indexOf(pattern, end) !== -1) {
+    str = replace(str, pattern, replacement);
   }
   return str;
 }

@@ -21,10 +21,10 @@ describe('get', function() {
     get(fixture, 'b.locals.name.last').should.eql('Woodward');
   });
 
-  it('should return an empty object if the path is not found', function () {
+  it('should return `null` if the path is not found', function () {
     var fixture = {};
-    get(fixture, 'a.locals.name').should.eql({});
-    get(fixture, 'b.locals.name').should.eql({});
+    (get(fixture, 'a.locals.name') == null).should.be.true;
+    (get(fixture, 'b.locals.name') == null).should.be.true;
   });
 
   it('should get the specified property.', function () {
