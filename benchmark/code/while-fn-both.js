@@ -46,15 +46,12 @@ module.exports = function getValue(obj, str, fn) {
   return last;
 };
 
-function replaceStr(str, pattern, replacement) {
-  var i, from = 0;
-  while (str.indexOf(pattern, from) !== -1) {
-    i = str.indexOf(pattern, from);
-    from = i + pattern.length;
-    str = str.substr(0, i)
-      + replacement
-      + str.substr(from, str.length);
-    from = i + replacement.length;
+function replaceStr(str, token, replacement) {
+  var i = str.indexOf(token);
+  var end = i + token.length;
+  str = str.substr(0, i) + replacement + str.substr(end, str.length);
+  if (str.indexOf(token, end) !== -1) {
+    str = replace(str, token, replacement);
   }
   return str;
 }

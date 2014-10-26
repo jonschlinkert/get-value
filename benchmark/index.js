@@ -9,8 +9,8 @@ var Suite = require('benchmarked');
 var suite = new Suite({
   expected: true,
   fixtures: 'fixtures/*.js',
-  add: 'code/{while,while-fn-*,getobject}.js',
-  cwd: 'benchmark'
+  add: 'code/{while,while-fn-*,reduce*}.js',
+  cwd: __dirname
 });
 suite.run();
 
