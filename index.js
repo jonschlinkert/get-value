@@ -49,12 +49,15 @@ module.exports = function getValue(obj, str, fn) {
   return last;
 };
 
-function replaceStr(str, pattern, replacement) {
-  var i = str.indexOf(pattern);
-  var end = i + pattern.length;
-  str = str.substr(0, i) + replacement + str.substr(end, str.length);
-  if (str.indexOf(pattern, end) !== -1) {
-    str = replace(str, pattern, replacement);
+function replaceStr(str, token, replacement) {
+  var i, from = 0;
+  while (str.indexOf(token, from) !== -1) {
+    i = str.indexOf(token, from);
+    from = i + token.length;
+    str = str.substr(0, i)
+      + replacement
+      + str.substr(from, str.length);
+    from = i + replacement.length;
   }
   return str;
 }
