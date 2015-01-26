@@ -1,7 +1,7 @@
 /*!
  * get-value <https://github.com/jonschlinkert/get-value>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT License
  */
 
@@ -25,7 +25,7 @@ module.exports = function getValue(obj, str, fn) {
   } else if (fn === true) {
     str = replaceStr(str, '\\.', '___DOT___');
     path = str.split('.').map(function (seg) {
-      return replaceStr(seg, '___DOT___', '.');
+      return seg.replace(/___DOT___/, '.');
     });
   } else {
     path = str.split('.');
@@ -33,18 +33,15 @@ module.exports = function getValue(obj, str, fn) {
 
   var len = path.length;
   var i = 0;
-  var last;
+  var last = null;
 
-  while(i < len) {
-    var key = path[i];
-    last = obj[key];
-    if (last == null) {
-      return null;
-    }
+  while(len--) {
+    last = obj[path[i++]];
+    if (!last) { return null; }
+
     if (typeof last === 'object') {
       obj = last;
     }
-    i++;
   }
   return last;
 };
@@ -54,9 +51,7 @@ function replaceStr(str, token, replacement) {
   while (str.indexOf(token, from) !== -1) {
     i = str.indexOf(token, from);
     from = i + token.length;
-    str = str.substr(0, i)
-      + replacement
-      + str.substr(from, str.length);
+    str = str.substr(0, i) + replacement + str.substr(from);
     from = i + replacement.length;
   }
   return str;
