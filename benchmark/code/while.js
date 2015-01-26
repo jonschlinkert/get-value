@@ -1,35 +1,21 @@
-'use strict';
 
-/**
- * While loop
- */
+module.exports = getValue;
 
-var isObject = require('isobject');
-
-module.exports = function getValue(obj, str) {
-  if (obj == null || !isObject(obj)) {
-    return {};
+function getValue(o, prop) {
+  if (o == null) { return {}; }
+  if (typeof prop !== 'string') {
+    return o;
   }
 
-  if (str == null || typeof str !== 'string') {
-    return obj;
-  }
-
-  var paths = str.split('.');
-  var len = paths.length;
+  var path = prop.split('.');
+  var last = path.pop();
+  var len = path.length;
   var i = 0;
-  var last;
 
-  while(i < len) {
-    var key = paths[i];
-    last = obj[key];
-    if (last == null) {
-      return {};
-    }
-    if (typeof last === 'object') {
-      obj = last;
-    }
-    i++;
+  while (len--) {
+    o = o[path[i++]];
+    if (!o) return o;
   }
-  return last;
+
+  return o[last];
 };

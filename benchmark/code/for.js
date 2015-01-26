@@ -1,17 +1,9 @@
-'use strict';
-
-/**
- * For loop
- */
 
 var isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
-  if (o == null || !isObject(o)) {
-    return {};
-  }
-
-  if (prop == null || typeof prop !== 'string') {
+  if (o == null) { return {}; }
+  if (typeof prop !== 'string') {
     return o;
   }
 
@@ -20,11 +12,11 @@ module.exports = function getValue(o, prop) {
   var len = path.length;
 
   for (var i = 0; i < len; i++) {
-    var key = path[i];
-    o = o[key];
-    if (o == null) {
-      return {};
+    o = o[path[i]];
+    if (!o) {
+      return o;
     }
   }
+
   return o[last];
 };

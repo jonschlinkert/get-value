@@ -1,9 +1,3 @@
-'use strict';
-
-/**
- * While loop with param for custom function. A noop
- * is called in the benchmarks since a callback isn't passed.
- */
 
 var isObject = require('isobject');
 

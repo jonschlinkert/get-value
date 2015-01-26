@@ -1,13 +1,9 @@
-'use strict';
 
-/**
- * Reduce
- */
+module.exports = function get(obj, path) {
+  if (obj == null) return {};
+  if (path == null) return obj;
 
-module.exports = function get(o, path) {
   return path.split('.').reduce(function(prev, curr) {
     return prev && prev[curr];
-  }, o);
+  }, obj);
 };
-
-// console.log(fn.apply(null, [{a: {b: {c: {d: {e: {f: {g: 'THE END!'}}}}}}}, 'a.b.c.d.e.f.g']));

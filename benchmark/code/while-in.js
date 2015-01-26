@@ -1,8 +1,3 @@
-'use strict';
-
-/**
- * While loop
- */
 
 var isObject = require('isobject');
 

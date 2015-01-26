@@ -1,23 +1,11 @@
-'use strict';
 
-/**
- * Reduce
- */
+var reduce = require('arr-reduce');
 
-function reduce(acc, fn, init) {
-  var len = acc.length;
+module.exports = function get(obj, path) {
+  if (obj == null) return {};
+  if (path == null) return obj;
 
-  for (var i = 0; i < len; i++) {
-    init = fn.call(null, init, acc[i], i, acc);
-  }
-
-  return init;
-}
-
-module.exports = function get(o, path) {
   return reduce(path.split('.'), function(prev, curr) {
     return prev && prev[curr];
-  }, o);
+  }, obj);
 };
-
-// console.log(fn.apply(null, [{a: {b: {c: {d: {e: {f: {g: 'THE END!'}}}}}}}, 'a.b.c.d.e.f.g']));

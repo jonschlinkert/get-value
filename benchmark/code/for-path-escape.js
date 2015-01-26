@@ -1,8 +1,3 @@
-'use strict';
-
-/**
- * For loop
- */
 
 var isObject = require('isobject');
 
