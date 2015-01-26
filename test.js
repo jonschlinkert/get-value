@@ -1,14 +1,27 @@
 /*!
  * get-value <https://github.com/jonschlinkert/get-value>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT License
  */
 
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
 var should = require('should');
+var argv = require('minimist')(process.argv.slice(2));
+var files = fs.readdirSync('./benchmark/code');
 var get = require('./');
+
+var keys = Object.keys(argv);
+if (keys && keys[1]) {
+  var lib = files.filter(function (fp) {
+    return keys[1] === path.basename(fp, path.extname(fp));
+  });
+  get = require(path.resolve('./benchmark/code/' + lib[0]));
+}
+
 
 describe('get', function() {
   it('should use property paths to get nested values from the source object.', function () {
@@ -37,6 +50,11 @@ describe('get', function() {
     get({a: 'a', b: {c: 'd'}}, 'a').should.eql('a');
   });
 
+  it('should ignore dots in escaped keys when `true` is passed.', function () {
+    get({'a.b': 'a', b: {c: 'd'}}, 'a\\.b', true).should.eql('a');
+    get({'a.b': {b: {c: 'd'}}}, 'a\\.b.b.c', true).should.eql('d');
+  });
+
   it('should return the entire object if no property is passed.', function () {
     get({a: 'a', b: {c: 'd'}}).should.eql({a: 'a', b: {c: 'd'}});
   });
@@ -53,4 +71,3 @@ describe('get', function() {
     get(null, 'a.c.g.h').should.eql({});
   });
 });
-
