@@ -36,7 +36,7 @@ module.exports = function getValue(obj, str, fn) {
 
   while(len--) {
     last = obj[path[i++]];
-    if (!last) { return null; }
+    if (!last) { return last; }
 
     if (typeof last === 'object') {
       obj = last;

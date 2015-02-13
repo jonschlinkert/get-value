@@ -1,7 +1,7 @@
 {
   "name": "get-value",
   "description": "Use property paths (`a.b.c`) get a nested value from an object.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "homepage": "https://github.com/jonschlinkert/get-value",
   "author": {
     "name": "Jon Schlinkert",
@@ -18,19 +18,19 @@
     "type": "MIT",
     "url": "https://github.com/jonschlinkert/get-value/blob/master/LICENSE"
   },
+  "files": [
+    "index.js"
+  ],
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha"
   },
   "dependencies": {
     "isobject": "^0.2.0"
   },
-  "files": [
-    "index.js"
-  ],
   "devDependencies": {
     "arr-reduce": "^1.0.0",
     "benchmarked": "^0.1.1",
@@ -54,10 +54,6 @@
     "property",
     "props",
     "segment",
-    "util",
-    "utilities",
-    "utility",
-    "utils",
     "value",
     "values"
   ]
