@@ -23,16 +23,15 @@ module.exports = function getValue(obj, str, fn) {
   if (fn && typeof fn === 'function') {
     path = fn(str);
   } else if (fn === true) {
-    str = replaceStr(str, '\\.', '___DOT___');
+    str = str.split('\\.').join('___DOT___');
     path = str.split('.').map(function (seg) {
-      return seg.replace(/___DOT___/, '.');
+      return seg.split('___DOT___').join('.');
     });
   } else {
     path = str.split('.');
   }
 
-  var len = path.length;
-  var i = 0;
+  var len = path.length, i = 0;
   var last = null;
 
   while(len--) {
@@ -45,14 +44,3 @@ module.exports = function getValue(obj, str, fn) {
   }
   return last;
 };
-
-function replaceStr(str, token, replacement) {
-  var i, from = 0;
-  while (str.indexOf(token, from) !== -1) {
-    i = str.indexOf(token, from);
-    from = i + token.length;
-    str = str.substr(0, i) + replacement + str.substr(from);
-    from = i + replacement.length;
-  }
-  return str;
-}
