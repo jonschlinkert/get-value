@@ -1,4 +1,5 @@
 # Numerous always-ignore extensions
+*.DS_Store
 *.csv
 *.dat
 *.diff

@@ -2,14 +2,14 @@
  * get-value <https://github.com/jonschlinkert/get-value>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
 var fs = require('fs');
 var path = require('path');
-var should = require('should');
+require('should');
 var argv = require('minimist')(process.argv.slice(2));
 var files = fs.readdirSync('./benchmark/code');
 var get = require('./');
