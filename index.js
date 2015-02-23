@@ -2,7 +2,7 @@
  * get-value <https://github.com/jonschlinkert/get-value>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License
+ * Licensed under the MIT License.
  */
 
 'use strict';
@@ -23,9 +23,11 @@ module.exports = function getValue(obj, str, fn) {
   if (fn && typeof fn === 'function') {
     path = fn(str);
   } else if (fn === true) {
-    str = str.split('\\.').join('___DOT___');
+    // guaranteed non-characters
+    // See http://en.wikipedia.org/wiki/Mapping_of_Unicode_characters#Noncharacters
+    str = str.split('\\.').join('\uffff');
     path = str.split('.').map(function (seg) {
-      return seg.split('___DOT___').join('.');
+      return seg.split('\uffff').join('.');
     });
   } else {
     path = str.split('.');
