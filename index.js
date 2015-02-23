@@ -7,6 +7,7 @@
 
 'use strict';
 
+var noncharacters = require('noncharacters');
 var isObject = require('isobject');
 
 module.exports = function getValue(obj, str, fn) {
@@ -23,11 +24,9 @@ module.exports = function getValue(obj, str, fn) {
   if (fn && typeof fn === 'function') {
     path = fn(str);
   } else if (fn === true) {
-    // guaranteed non-characters
-    // See http://en.wikipedia.org/wiki/Mapping_of_Unicode_characters#Noncharacters
-    str = str.split('\\.').join('\uffff');
+    str = str.split('\\.').join(noncharacters[0]);
     path = str.split('.').map(function (seg) {
-      return seg.split('\uffff').join('.');
+      return seg.split(noncharacters[0]).join('.');
     });
   } else {
     path = str.split('.');
