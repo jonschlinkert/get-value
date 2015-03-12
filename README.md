@@ -2,6 +2,26 @@
 
 > Use property paths (`a.b.c`) get a nested value from an object.
 
+[**Benchmarks**](benchmark)
+
+This is 10x faster and more performant than [dot-prop](https://github.com/sindresorhus/dot-prop), and it passes all of the dot-prop tests. 
+
+Of the libs benchmarked, _dot-prop was the least performant_:
+
+```bash
+#1: deep
+  get-value x 3,308,335 ops/sec ±1.32% (94 runs sampled)
+  dot-prop x 197,631 ops/sec ±1.27% (94 runs sampled)
+  getobject x 218,635 ops/sec ±1.51% (91 runs sampled)
+
+#2: shallow
+  get-value x 5,762,976 ops/sec ±1.21% (95 runs sampled)
+  dot-prop x 695,892 ops/sec ±1.42% (95 runs sampled)
+  getobject x 724,493 ops/sec ±1.46% (93 runs sampled)
+```
+
+Also, get-value supports escaping dots in paths, which is common when object keys are file paths with extensions, dot-prop does not.
+
 
 ## Install with [npm](npmjs.org)
 
@@ -41,9 +61,11 @@ get(obj, 'a.b.c.d');
   - [get-object](https://github.com/jonschlinkert/get-object)
 
 
-## Run tests
+## Contributing
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/jonschlinkert/get-value/issues)
 
-Install dev dependencies:
+## Running tests
+Install dev dependencies.
 
 ```bash
 npm i -d && npm test
@@ -55,7 +77,6 @@ npm i -d && npm test
  
 + [github/jonschlinkert](https://github.com/jonschlinkert)
 + [twitter/jonschlinkert](http://twitter.com/jonschlinkert) 
-
 
 ## License
 Copyright (c) 2014-2015 Jon Schlinkert  
