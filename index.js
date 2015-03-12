@@ -11,23 +11,15 @@ var noncharacters = require('noncharacters');
 var isObject = require('isobject');
 
 module.exports = function getValue(obj, str, fn) {
-  if (obj == null || !isObject(obj)) {
-    return {};
-  }
-
-  if (str == null || typeof str !== 'string') {
-    return obj;
-  }
+  if (!isObject(obj)) return {};
+  if (typeof str !== 'string') return obj;
 
   var path;
 
   if (fn && typeof fn === 'function') {
     path = fn(str);
   } else if (fn === true) {
-    str = str.split('\\.').join(noncharacters[0]);
-    path = str.split('.').map(function (seg) {
-      return seg.split(noncharacters[0]).join('.');
-    });
+    path = escapePath(str);
   } else {
     path = str.split('.');
   }
@@ -45,3 +37,18 @@ module.exports = function getValue(obj, str, fn) {
   }
   return last;
 };
+
+
+function escape(str) {
+  return str.split('\\.').join(noncharacters[0]);
+}
+
+function unescape(str) {
+  return str.split(noncharacters[0]).join('.');
+}
+
+function escapePath(str) {
+  return escape(str).split('.').map(function (seg) {
+    return unescape(seg);
+  });
+}
