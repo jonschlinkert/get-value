@@ -31,7 +31,7 @@ module.exports = function getValue(obj, str, fn) {
     last = obj[path[i++]];
     if (!last) { return last; }
 
-    if (typeof last === 'object') {
+    if (isObject(obj)) {
       obj = last;
     }
   }
