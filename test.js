@@ -7,6 +7,7 @@
 
 'use strict';
 
+/* deps:mocha */
 require('should');
 var fs = require('fs');
 var path = require('path');
