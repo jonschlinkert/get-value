@@ -36,6 +36,7 @@
     "arr-reduce": "^1.0.1",
     "benchmarked": "^0.1.4",
     "chalk": "^1.0.0",
+    "dot-prop": "^1.0.1",
     "getobject": "^0.1.0",
     "glob": "^5.0.3",
     "minimist": "^1.1.1",

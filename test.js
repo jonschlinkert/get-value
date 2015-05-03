@@ -26,12 +26,36 @@ if (keys && keys[1]) {
 describe('get value:', function() {
   it('should use property paths to get nested values from the source object.', function () {
     var fixture = {
-      a: {locals : {name: {first: 'Brian'}}},
-      b: {locals : {name: {last: 'Woodward'}}}
+      a: {locals: {name: {first: 'Brian'}}},
+      b: {locals: {name: {last: 'Woodward'}}},
+      c: {locals: {paths: ['a.txt', 'b.js', 'c.hbs']}}
     };
     get(fixture, 'a.locals.name').should.eql({first: 'Brian'});
     get(fixture, 'b.locals.name').should.eql({last: 'Woodward'});
     get(fixture, 'b.locals.name.last').should.eql('Woodward');
+    get(fixture, 'c.locals.paths.0').should.eql('a.txt');
+    get(fixture, 'c.locals.paths.1').should.eql('b.js');
+    get(fixture, 'c.locals.paths.2').should.eql('c.hbs');
+  });
+
+  it('should get specified position from an array', function () {
+    var fixture = {
+      a: {paths: ['a.txt', 'a.js', 'a.hbs']},
+      b: {paths: {
+        '0': 'b.txt',
+        '1': 'b.js',
+        '2': 'b.hbs',
+        3: 'b3.hbs'
+      }}
+    }
+    get(fixture, 'a.paths.0').should.eql('a.txt');
+    get(fixture, 'a.paths.1').should.eql('a.js');
+    get(fixture, 'a.paths.2').should.eql('a.hbs');
+
+    get(fixture, 'b.paths.0').should.eql('b.txt');
+    get(fixture, 'b.paths.1').should.eql('b.js');
+    get(fixture, 'b.paths.2').should.eql('b.hbs');
+    get(fixture, 'b.paths.3').should.eql('b3.hbs');
   });
 
   it('should return `undefined` if the path is not found', function () {
