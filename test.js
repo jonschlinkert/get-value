@@ -78,6 +78,7 @@ describe('get value:', function() {
     var obj = {a: 'a', b: [{c: 'd'}, {c: 'e'}, {c: {d: 'e'}}]};
     get(obj, 'b[2].c').should.eql({d: 'e'});
     get(obj, 'b[0].c').should.eql('d');
+    get(obj, 'b[0]').should.eql({c: 'd'});
   });
 
   it('should ignore dots in escaped keys when `true` is passed.', function () {

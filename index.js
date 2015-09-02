@@ -21,7 +21,7 @@ module.exports = function getValue(obj, str, fn) {
   } else if (fn === true) {
     path = escapePath(str);
   } else {
-    path = str.split(/[[.\]]+/);
+    path = str.split(/[[.\]]/).filter(Boolean);
   }
 
   var len = path.length, i = -1;
