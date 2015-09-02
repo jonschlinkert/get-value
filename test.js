@@ -74,6 +74,12 @@ describe('get value:', function() {
     get({a: 'a', b: {c: 'd'}}, 'a').should.eql('a');
   });
 
+  it('should support array notation.', function () {
+    var obj = {a: 'a', b: [{c: 'd'}, {c: 'e'}, {c: {d: 'e'}}]};
+    get(obj, 'b[2].c').should.eql({d: 'e'});
+    get(obj, 'b[0].c').should.eql('d');
+  });
+
   it('should ignore dots in escaped keys when `true` is passed.', function () {
     get({'a.b': 'a', b: {c: 'd'}}, 'a\\.b', true).should.eql('a');
     get({'a.b': {b: {c: 'd'}}}, 'a\\.b.b.c', true).should.eql('d');

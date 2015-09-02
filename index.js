@@ -8,7 +8,7 @@
 'use strict';
 
 var noncharacters = require('noncharacters');
-var isObject = require('isobject');
+var isObject = require('is-extendable');
 
 module.exports = function getValue(obj, str, fn) {
   if (!isObject(obj)) return {};
@@ -21,14 +21,15 @@ module.exports = function getValue(obj, str, fn) {
   } else if (fn === true) {
     path = escapePath(str);
   } else {
-    path = str.split('.');
+    path = str.split(/[[.\]]+/);
   }
 
-  var len = path.length, i = 0;
+  var len = path.length, i = -1;
   var last = null;
 
-  while(len--) {
-    last = obj[path[i++]];
+  while(++i < len) {
+    var key = path[i];
+    last = obj[key];
     if (!last) { return last; }
 
     if (isObject(obj)) {
