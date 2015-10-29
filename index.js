@@ -7,21 +7,24 @@
 
 'use strict';
 
-var noncharacters = require('noncharacters');
-var isObject = require('is-extendable');
+var utils = require('./utils');
 
-module.exports = function getValue(obj, str, fn) {
-  if (!isObject(obj)) return {};
-  if (typeof str !== 'string') return obj;
+module.exports = function getValue(obj, prop, fn) {
+  if (!utils.isObject(obj)) return {};
+  if (Array.isArray(prop)) {
+    prop = utils.flatten(prop).join('.');
+  }
+
+  if (typeof prop !== 'string') return obj;
 
   var path;
 
   if (fn && typeof fn === 'function') {
-    path = fn(str);
+    path = fn(prop);
   } else if (fn === true) {
-    path = escapePath(str);
+    path = escapePath(prop);
   } else {
-    path = str.split(/[[.\]]/).filter(Boolean);
+    path = prop.split(/[[.\]]/).filter(Boolean);
   }
 
   var len = path.length, i = -1;
@@ -32,7 +35,7 @@ module.exports = function getValue(obj, str, fn) {
     last = obj[key];
     if (!last) { return last; }
 
-    if (isObject(obj)) {
+    if (utils.isObject(obj)) {
       obj = last;
     }
   }
@@ -41,11 +44,11 @@ module.exports = function getValue(obj, str, fn) {
 
 
 function escape(str) {
-  return str.split('\\.').join(noncharacters[0]);
+  return str.split('\\.').join(utils.nonchars[0]);
 }
 
 function unescape(str) {
-  return str.split(noncharacters[0]).join('.');
+  return str.split(utils.nonchars[0]).join('.');
 }
 
 function escapePath(str) {
