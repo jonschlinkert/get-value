@@ -5,54 +5,35 @@
  * Licensed under the MIT License.
  */
 
-'use strict';
+module.exports = function(obj, prop) {
+  if (!isObject(obj)) { return obj; }
+  var segs = toSegments(prop);
+  if (segs === null) return obj;
 
-var utils = require('./utils');
+  var len = segs.length;
+  var i = -1;
 
-module.exports = function getValue(obj, prop, fn) {
-  if (!utils.isObject(obj)) return {};
-  if (Array.isArray(prop)) {
-    prop = utils.flatten(prop).join('.');
-  }
-
-  if (typeof prop !== 'string') return obj;
-
-  var path;
-
-  if (fn && typeof fn === 'function') {
-    path = fn(prop);
-  } else if (fn === true) {
-    path = escapePath(prop);
-  } else {
-    path = prop.split(/[[.\]]/).filter(Boolean);
-  }
-
-  var len = path.length, i = -1;
-  var last = null;
-
-  while(++i < len) {
-    var key = path[i];
-    last = obj[key];
-    if (!last) { return last; }
-
-    if (utils.isObject(obj)) {
-      obj = last;
+  while (obj && (++i < len)) {
+    var key = segs[i];
+    while (key[key.length - 1] === '\\') {
+      key = key.slice(0, -1) + '.' + segs[++i];
     }
+    obj = obj[key];
   }
-  return last;
+  return obj;
 };
 
-
-function escape(str) {
-  return str.split('\\.').join(utils.nonchars[0]);
+function toSegments(val) {
+  if (Array.isArray(val)) {
+    return val;
+  }
+  if (typeof val === 'string') {
+    return val.split('.');
+  }
+  return null;
 }
 
-function unescape(str) {
-  return str.split(utils.nonchars[0]).join('.');
+function isObject(val) {
+  return val !== null && (typeof val === 'object' || typeof val === 'function');
 }
 
-function escapePath(str) {
-  return escape(str).split('.').map(function (seg) {
-    return unescape(seg);
-  });
-}
