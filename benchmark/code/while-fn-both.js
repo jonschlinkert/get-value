@@ -46,7 +46,7 @@ function replaceStr(str, token, replacement) {
   var end = i + token.length;
   str = str.substr(0, i) + replacement + str.substr(end, str.length);
   if (str.indexOf(token, end) !== -1) {
-    str = replace(str, token, replacement);
+    str = str.replace(token, replacement);
   }
   return str;
 }

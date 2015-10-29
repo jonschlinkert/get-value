@@ -5,4 +5,4 @@
  * do escaping.
  */
 
-module.exports = [{'a.b.c': {d: {e: {f: {g: 'THE END!'}}}}}, 'a\\.b\\.c.d.e.f.g', true];
+module.exports = [{'a.b.c': {d: {e: {f: {g: 'THE END!'}}}}}, 'a\\.b\\.c.d.e.f.g'];

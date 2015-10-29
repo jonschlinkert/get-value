@@ -1,5 +1,1 @@
-/**
- * https://github.com/cowboy/node-getobject
- */
-
-module.exports = require('getobject').get;
+module.exports = require('dot-prop').get;

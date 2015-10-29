@@ -3,22 +3,32 @@
 var path = require('path');
 var bold = require('ansi-bold');
 var glob = require('matched');
+var argv = require('minimist')(process.argv.slice(2), {
+  alias: {fixtures: 'f', code: 'c'}
+});
 
 /**
  * Sanity check. Run to ensure that all fns return the same result.
  */
 
-var fixtures = glob.sync(__dirname + '/fixtures/*.js');
+var fixtures = files('fixtures', argv.f);
+var code = files('code', argv.c);
 
-glob.sync(__dirname + '/code/*.js').forEach(function (fp) {
+code.forEach(function (fp) {
   var fn = require(path.resolve(__dirname, 'code', fp));
   var name = path.basename(fp, path.extname(fp));
-  if (/\.js/.test(fp) && /^while.*/.test(name)) {
 
-    fixtures.forEach(function (fixture) {
-      if (/^(sh|de).*\.js/.test(path.basename(fixture))) {
-        console.log(chalk.bold(name) + ':', fn.apply(fn, require(fixture)));
-      }
-    });
-  }
+  fixtures.forEach(function (fixture) {
+    var base = ' (' + path.basename(fixture, path.extname(fixture)) + ')';
+    console.log(bold(name) + ':' + base, fn.apply(fn, require(fixture)));
+  });
 });
+
+
+function toGlob(base, pattern) {
+  return path.join(__dirname, base, (pattern || '*') + '.js');
+}
+
+function files(base, pattern) {
+  return glob.sync(toGlob(base, pattern));
+}
