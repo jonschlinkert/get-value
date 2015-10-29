@@ -1,16 +1,10 @@
-/*!
- * get-value <https://github.com/jonschlinkert/get-value>
- *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
 'use strict';
 
-/* deps:mocha */
+require('mocha');
 require('should');
 var fs = require('fs');
 var path = require('path');
+var assert = require('assert');
 var argv = require('minimist')(process.argv.slice(2));
 var files = fs.readdirSync('./benchmark/code');
 var get = require('./');
@@ -70,8 +64,16 @@ describe('get value:', function() {
     get({locals: {a: 'a'}, options: {b: 'b'}}, 'locals').should.eql({a: 'a'});
   });
 
+  it('should support passing an array as the property', function () {
+    assert(get({a: 'aaa', b: 'b'}, ['a']) === 'aaa');
+    assert(get({a: {b: {c: 'd'}}}, ['a', 'b', 'c']) === 'd');
+    assert(get({first: 'Jon', last: 'Schlinkert'}, ['first']) === 'Jon');
+    get({locals: {a: 'a'}, options: {b: 'b'}}, ['locals']).should.eql({a: 'a'});
+  });
+
   it('should get a value only.', function () {
-    get({a: 'a', b: {c: 'd'}}, 'a').should.eql('a');
+    assert(get({a: 'a', b: {c: 'd'}}, 'a') === 'a');
+    assert(get({a: 'a', b: {c: 'd'}}, 'b.c') === 'd');
   });
 
   it('should support array notation.', function () {
@@ -84,10 +86,6 @@ describe('get value:', function() {
   it('should ignore dots in escaped keys when `true` is passed.', function () {
     get({'a.b': 'a', b: {c: 'd'}}, 'a\\.b', true).should.eql('a');
     get({'a.b': {b: {c: 'd'}}}, 'a\\.b.b.c', true).should.eql('d');
-  });
-
-  it('should get a value only.', function () {
-    get({a: 'a', b: {c: 'd'}}, 'b.c').should.eql('d');
   });
 
   it('should get the value of a deeply nested property.', function () {
