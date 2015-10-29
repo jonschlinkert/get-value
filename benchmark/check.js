@@ -1,8 +1,8 @@
 'use strict';
 
-var chalk = require('chalk');
 var path = require('path');
-var glob = require('glob');
+var bold = require('ansi-bold');
+var glob = require('matched');
 
 /**
  * Sanity check. Run to ensure that all fns return the same result.

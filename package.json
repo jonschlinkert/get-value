@@ -3,14 +3,8 @@
   "description": "Use property paths (`a.b.c`) to get a nested value from an object.",
   "version": "1.2.1",
   "homepage": "https://github.com/jonschlinkert/get-value",
-  "author": {
-    "name": "Jon Schlinkert",
-    "url": "https://github.com/jonschlinkert"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jonschlinkert/get-value.git"
-  },
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/get-value",
   "bugs": {
     "url": "https://github.com/jonschlinkert/get-value/issues"
   },
@@ -26,19 +20,20 @@
     "test": "mocha"
   },
   "dependencies": {
+    "arr-flatten": "^1.0.1",
     "is-extendable": "^0.1.1",
-    "isobject": "^1.0.0",
     "noncharacters": "^1.1.0"
   },
   "devDependencies": {
+    "ansi-bold": "^0.1.1",
     "arr-reduce": "^1.0.1",
     "benchmarked": "^0.1.4",
-    "chalk": "^1.0.0",
     "getobject": "^0.1.0",
-    "glob": "^5.0.5",
-    "minimist": "^1.1.1",
-    "mocha": "^2.2.4",
-    "should": "^6.0.1"
+    "isobject": "^2.0.0",
+    "matched": "^0.3.2",
+    "minimist": "^1.2.0",
+    "mocha": "^2.3.3",
+    "should": "^7.1.1"
   },
   "keywords": [
     "get",
