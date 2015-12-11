@@ -25,7 +25,7 @@ module.exports = function(obj, prop) {
 
 function toSegments(val) {
   if (Array.isArray(val)) {
-    return val;
+    return val.join('.').split('.');
   }
   if (typeof val === 'string') {
     return val.split('.');
