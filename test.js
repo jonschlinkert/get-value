@@ -7,10 +7,15 @@ var path = require('path');
 var assert = require('assert');
 var argv = require('minimist')(process.argv.slice(2));
 var files = fs.readdirSync('./benchmark/code');
+var dotProp = require('dot-prop');
 var get = require('./');
 
 if (argv.bench) {
   get = require(path.resolve('benchmark/code', argv.bench));
+}
+
+if (argv.dot) {
+  get = dotProp.get;
 }
 
 describe('get value:', function() {
@@ -23,6 +28,10 @@ describe('get value:', function() {
   it('should get the value only (not the key and value).', function () {
     assert(get({a: 'a', b: {c: 'd'}}, 'a') === 'a');
     assert(get({a: 'a', b: {c: 'd'}}, 'b.c') === 'd');
+  });
+
+  it('should get a property that has dots in the key', function () {
+    assert(get({'a.b': 'c'}, 'a.b') === 'c');
   });
 
   it('should support using dot notation to get nested values', function () {

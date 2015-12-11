@@ -5,11 +5,25 @@
  * Licensed under the MIT License.
  */
 
-module.exports = function(obj, prop) {
-  if (!isObject(obj)) { return obj; }
-  var segs = toSegments(prop);
-  if (segs === null) return obj;
+module.exports = function(obj, prop, a, b, c) {
+  if (!isObject(obj) || !prop) {
+    return obj;
+  }
 
+  prop = toString(prop);
+
+  // allowing for multiple properties to be passed as
+  // a string or array, but much faster (3-4x) than doing
+  // `[].slice.call(arguments)`
+  if (a) prop += '.' + toString(a);
+  if (b) prop += '.' + toString(b);
+  if (c) prop += '.' + toString(c);
+
+  if (prop in obj) {
+    return obj[prop];
+  }
+
+  var segs = prop.split('.');
   var len = segs.length;
   var i = -1;
 
@@ -23,17 +37,14 @@ module.exports = function(obj, prop) {
   return obj;
 };
 
-function toSegments(val) {
-  if (Array.isArray(val)) {
-    return val.join('.').split('.');
-  }
-  if (typeof val === 'string') {
-    return val.split('.');
-  }
-  return null;
-}
-
 function isObject(val) {
   return val !== null && (typeof val === 'object' || typeof val === 'function');
 }
 
+function toString(val) {
+  if (!val) return '';
+  if (Array.isArray(val)) {
+    return val.join('.');
+  }
+  return val;
+}
