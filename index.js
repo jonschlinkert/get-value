@@ -23,11 +23,11 @@ module.exports = function(obj, prop, a, b, c) {
     return obj[prop];
   }
 
-  var segs = prop.split('.');
+  var segs = prop.split(/(?:[\[\.]|\]\.)/);
   var len = segs.length;
   var i = -1;
 
-  while (obj && (++i < len)) {
+  while (obj && ++i < len) {
     var key = segs[i];
     while (key[key.length - 1] === '\\') {
       key = key.slice(0, -1) + '.' + segs[++i];
