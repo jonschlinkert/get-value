@@ -27,6 +27,7 @@
     "getobject": "^0.1.0",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.1.1",
+    "gulp-format-md": "^0.1.5",
     "gulp-istanbul": "^0.10.2",
     "gulp-mocha": "^2.1.3",
     "isobject": "^2.0.0",
