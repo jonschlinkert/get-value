@@ -51,9 +51,6 @@
     "values"
   ],
   "verb": {
-    "plugins": [
-      "gulp-format-md"
-    ],
     "related": {
       "list": [
         "unset-value",
@@ -62,6 +59,9 @@
         "has-any",
         "has-any-deep"
       ]
-    }
+    },
+    "plugins": [
+      "gulp-format-md"
+    ]
   }
 }

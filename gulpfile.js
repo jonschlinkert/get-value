@@ -5,19 +5,19 @@ var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
 var eslint = require('gulp-eslint');
 
-gulp.task('coverage', function () {
+gulp.task('coverage', function() {
   return gulp.src(['index.js'])
     .pipe(istanbul())
     .pipe(istanbul.hookRequire());
 });
 
-gulp.task('mocha', ['coverage'], function () {
+gulp.task('mocha', ['coverage'], function() {
   return gulp.src('test.js')
     .pipe(mocha({reporter: 'spec'}))
     .pipe(istanbul.writeReports());
 });
 
-gulp.task('eslint', function () {
+gulp.task('eslint', function() {
   return gulp.src(['gulpfile.js', 'index.js'])
     .pipe(eslint())
     .pipe(eslint.format());
