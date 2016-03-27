@@ -19,22 +19,22 @@ if (argv.dot) {
 }
 
 describe('get value:', function() {
-  it('should return invalid args', function () {
+  it('should return invalid args', function() {
     assert(get(null) === null);
     assert(get('foo') === 'foo');
     assert.deepEqual(get(['a']), ['a']);
   });
 
-  it('should get the value only (not the key and value).', function () {
+  it('should get the value only (not the key and value).', function() {
     assert(get({a: 'a', b: {c: 'd'}}, 'a') === 'a');
     assert(get({a: 'a', b: {c: 'd'}}, 'b.c') === 'd');
   });
 
-  it('should get a property that has dots in the key', function () {
+  it('should get a property that has dots in the key', function() {
     assert(get({'a.b': 'c'}, 'a.b') === 'c');
   });
 
-  it('should support using dot notation to get nested values', function () {
+  it('should support using dot notation to get nested values', function() {
     var fixture = {
       a: {locals: {name: {first: 'Brian'}}},
       b: {locals: {name: {last: 'Woodward'}}},
@@ -48,7 +48,7 @@ describe('get value:', function() {
     get(fixture, 'c.locals.paths.2').should.eql('c.hbs');
   });
 
-  it('should get specified position from an array', function () {
+  it('should get specified position from an array', function() {
     var fixture = {
       a: {paths: ['a.txt', 'a.js', 'a.hbs']},
       b: {paths: {
@@ -68,41 +68,41 @@ describe('get value:', function() {
     get(fixture, 'b.paths.3').should.eql('b3.hbs');
   });
 
-  it('should return `undefined` if the path is not found', function () {
+  it('should return `undefined` if the path is not found', function() {
     var fixture = {};
     assert(get(fixture, 'a.locals.name') === undefined);
     assert(get(fixture, 'b.locals.name') === undefined);
   });
 
-  it('should get the specified property.', function () {
+  it('should get the specified property.', function() {
     get({a: 'aaa', b: 'b'}, 'a').should.eql('aaa');
     get({first: 'Jon', last: 'Schlinkert'}, 'first').should.eql('Jon');
     get({locals: {a: 'a'}, options: {b: 'b'}}, 'locals').should.eql({a: 'a'});
   });
 
-  it('should support passing an array as the property', function () {
+  it('should support passing an array as the property', function() {
     assert(get({a: 'aaa', b: 'b'}, ['a']) === 'aaa');
     assert(get({a: {b: {c: 'd'}}}, ['a', 'b', 'c']) === 'd');
     assert(get({first: 'Jon', last: 'Schlinkert'}, ['first']) === 'Jon');
     get({locals: {a: 'a'}, options: {b: 'b'}}, ['locals']).should.eql({a: 'a'});
   });
 
-  it('should ignore dots in escaped keys when `true` is passed.', function () {
+  it('should ignore dots in escaped keys when `true` is passed.', function() {
     get({'a.b': 'a', b: {c: 'd'}}, 'a\\.b').should.eql('a');
     get({'a.b': {b: {c: 'd'}}}, 'a\\.b.b.c').should.eql('d');
   });
 
-  it('should get the value of a deeply nested property.', function () {
+  it('should get the value of a deeply nested property.', function() {
     get({a: {b: 'c', c: {d: 'e', e: 'f', g: {h: 'i'}}}}, 'a.c.g.h').should.eql('i');
   });
 
-  it('should return the entire object if no property is passed.', function () {
+  it('should return the entire object if no property is passed.', function() {
     get({a: 'a', b: {c: 'd'}}).should.eql({a: 'a', b: {c: 'd'}});
   });
 });
 
-describe('dot-prop tests:', function () {
-  it('should pass all of the dot-prop tests.', function () {
+describe('dot-prop tests:', function() {
+  it('should pass all of the dot-prop tests.', function() {
     var f1 = {foo: {bar: 1}};
     get(f1).should.eql(f1);
     get(f1, 'foo').should.eql(f1.foo);

@@ -52,17 +52,29 @@
     "values"
   ],
   "verb": {
-    "related": {
-      "list": [
-        "unset-value",
-        "has-value",
-        "set-value",
-        "has-any",
-        "has-any-deep"
-      ]
-    },
+    "run": true,
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
     "plugins": [
       "gulp-format-md"
-    ]
+    ],
+    "related": {
+      "list": [
+        "has-any",
+        "has-any-deep",
+        "has-value",
+        "set-value",
+        "unset-value"
+      ]
+    },
+    "reflinks": [
+      "verb"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
