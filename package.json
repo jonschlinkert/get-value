@@ -32,9 +32,7 @@
     "gulp-mocha": "^2.1.3",
     "isobject": "^2.0.0",
     "matched": "^0.3.2",
-    "minimist": "^1.2.0",
-    "mocha": "*",
-    "should": "*"
+    "minimist": "^1.2.0"
   },
   "keywords": [
     "get",
@@ -71,7 +69,8 @@
       ]
     },
     "reflinks": [
-      "verb"
+      "verb",
+      "verb-readme-generator"
     ],
     "lint": {
       "reflinks": true
