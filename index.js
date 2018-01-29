@@ -1,50 +1,103 @@
 /*!
  * get-value <https://github.com/jonschlinkert/get-value>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
  */
 
-module.exports = function(obj, prop, a, b, c) {
-  if (!isObject(obj) || !prop) {
-    return obj;
+const isObject = require('isobject');
+
+module.exports = function(target, path, options) {
+  if (!isObject(options)) {
+    options = { default: options };
   }
 
-  prop = toString(prop);
-
-  // allowing for multiple properties to be passed as
-  // a string or array, but much faster (3-4x) than doing
-  // `[].slice.call(arguments)`
-  if (a) prop += '.' + toString(a);
-  if (b) prop += '.' + toString(b);
-  if (c) prop += '.' + toString(c);
-
-  if (prop in obj) {
-    return obj[prop];
+  if (!isValidObject(target)) {
+    return options.default != null ? options.default : target;
   }
 
-  var segs = prop.split('.');
-  var len = segs.length;
-  var i = -1;
+  const isArray = Array.isArray(path);
+  const isString = typeof path === 'string';
+  const splitChar = options.separator || '.';
+  const joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
 
-  while (obj && (++i < len)) {
-    var key = segs[i];
-    while (key[key.length - 1] === '\\') {
-      key = key.slice(0, -1) + '.' + segs[++i];
+  if (!isString && !isArray) {
+    return target;
+  }
+
+  if (isString && path in target) {
+    return isValid(path, target, options) ? target[path] : options.default;
+  }
+
+  let segs = isArray ? path : split(path, splitChar, options);
+  let len = segs.length;
+  let idx = 0;
+
+  do {
+    let prop = segs[idx];
+
+    while (prop && prop.slice(-1) === '\\') {
+      prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
     }
-    obj = obj[key];
+
+    if (prop in target) {
+      if (!isValid(prop, target, options)) {
+        return options.default;
+      }
+
+      target = target[prop];
+    } else {
+      let hasProp = false;
+      let n = idx + 1;
+
+      while (n < len) {
+        prop = join([prop, segs[n++]], joinChar, options);
+
+        if ((hasProp = prop in target)) {
+          if (!isValid(prop, target, options)) {
+            return options.default;
+          }
+
+          target = target[prop];
+          idx = n - 1;
+          break;
+        }
+      }
+
+      if (!hasProp) {
+        return options.default;
+      }
+    }
+  } while (++idx < len && isValidObject(target));
+
+  if (idx === len) {
+    return target;
   }
-  return obj;
+
+  return options.default;
 };
 
-function isObject(val) {
-  return val !== null && (typeof val === 'object' || typeof val === 'function');
+function join(segs, joinChar, options) {
+  if (typeof options.join === 'function') {
+    return options.join(segs);
+  }
+  return segs[0] + joinChar + segs[1];
 }
 
-function toString(val) {
-  if (!val) return '';
-  if (Array.isArray(val)) {
-    return val.join('.');
+function split(path, splitChar, options) {
+  if (typeof options.split === 'function') {
+    return options.split(path);
   }
-  return val;
+  return path.split(splitChar);
+}
+
+function isValid(key, target, options) {
+  if (typeof options.isValid === 'function') {
+    return options.isValid(key, target);
+  }
+  return true;
+}
+
+function isValidObject(val) {
+  return isObject(val) || Array.isArray(val) || typeof val === 'function';
 }

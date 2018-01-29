@@ -17,4 +17,4 @@ module.exports = [{
   l: {i: {k: 'L'}},
   m: 'M',
   n: 'N'
-}, 'l.i.k'];
+}, 'l'];

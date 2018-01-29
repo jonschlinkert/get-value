@@ -1,4 +1,3 @@
-
 var isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
@@ -15,7 +14,7 @@ module.exports = function getValue(o, prop) {
   if (prop.indexOf('\\.') !== -1) {
     prop = replaceStr(prop, '\\.', '___DOT___');
 
-    path = prop.split('.').map(function (seg) {
+    path = prop.split('.').map(function(seg) {
       return replaceStr(seg, '___DOT___', '.');
     });
   } else {
@@ -34,8 +33,6 @@ module.exports = function getValue(o, prop) {
   }
   return o[last];
 };
-
-
 
 function replaceStr(str, pattern, replacement) {
   var i, from = 0;

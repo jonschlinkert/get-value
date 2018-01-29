@@ -16,7 +16,7 @@ module.exports = function getValue(obj, str, fn) {
     path = fn(str);
   } else if (fn === true) {
     str = replaceStr(str, '\\.', '___DOT___');
-    path = str.split('.').map(function (seg) {
+    path = str.split('.').map(function(seg) {
       return replaceStr(seg, '___DOT___', '.');
     });
   } else {
@@ -27,7 +27,7 @@ module.exports = function getValue(obj, str, fn) {
   var i = 0;
   var last;
 
-  while(i < len) {
+  while (i < len) {
     var key = path[i];
     last = obj[key];
     if (last == null) {

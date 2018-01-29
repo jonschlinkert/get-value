@@ -13,7 +13,7 @@ module.exports = function getValue(o, prop) {
 
   if (/\\\./.test(prop)) {
     prop = prop.replace(/\\\./g, '___DOT___');
-    path = prop.split('.').map(function (seg) {
+    path = prop.split('.').map(function(seg) {
       return seg.replace(/___DOT___/g, '.');
     });
   } else {

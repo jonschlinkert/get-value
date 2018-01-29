@@ -13,7 +13,7 @@ module.exports = function getValue(o, prop, escape) {
 
   if (escape === true) {
     prop = replaceStr(prop, '\\.', '___DOT___');
-    path = prop.split('.').map(function (seg) {
+    path = prop.split('.').map(function(seg) {
       return replaceStr(seg, '___DOT___', '.');
     });
   } else {

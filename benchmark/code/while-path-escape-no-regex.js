@@ -10,7 +10,7 @@ module.exports = function getValue(o, prop) {
   }
 
   prop = replaceStr(prop, '\\.', '___DOT___');
-  var path = prop.split('.').map(function (seg) {
+  var path = prop.split('.').map(function(seg) {
     return replaceStr(seg, '___DOT___', '.');
   });
 

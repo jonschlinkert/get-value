@@ -15,7 +15,7 @@ module.exports = function getValue(obj, str) {
   var i = 0;
   var last;
 
-  while(i < len) {
+  while (i < len) {
     var key = paths[i];
     if (key in obj) {
       last = obj[key];

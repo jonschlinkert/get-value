@@ -1,11 +1,8 @@
 'use strict';
 
-var Suite = require('benchmarked');
+const bench = require('benchmarked');
 
-var suite = new Suite({
-  expected: true,
-  fixtures: 'fixtures/{deep,sh*}.js',
-  add: 'code/{dot*,current,geto*}.js',
-  cwd: __dirname
-});
-suite.run();
+bench.run({fixtures: 'fixtures/{deep,root,shallow,escaped}.js', code: 'code/{dot*,get-value}.js'})
+  .then(function() {
+    console.log(arguments);
+  });

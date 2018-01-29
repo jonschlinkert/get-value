@@ -11,7 +11,7 @@ module.exports = function getValue(o, prop) {
   }
 
   prop = replaceStr(prop, '\\.', '___DOT___');
-  var path = prop.split('.').map(function (seg) {
+  var path = prop.split('.').map(function(seg) {
     return replaceStr(seg, '___DOT___', '.');
   });
 
@@ -27,7 +27,6 @@ module.exports = function getValue(o, prop) {
   }
   return o[last];
 };
-
 
 function replaceStr(str, pattern, replacement) {
   var i, from = 0;

@@ -22,7 +22,7 @@ module.exports = function getValue(obj, str, fn) {
   var i = 0;
   var last;
 
-  while(i < len) {
+  while (i < len) {
     var key = paths[i];
     last = obj[key];
     if (last == null) {

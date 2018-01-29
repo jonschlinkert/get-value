@@ -1,10 +1,10 @@
 
 var isObject = require('isobject');
 
-module.exports = function getValue(o, prop) {
-  if (o == null) { return {}; }
+module.exports = function getValue(obj, prop) {
+  if (obj == null) { return {}; }
   if (typeof prop !== 'string') {
-    return o;
+    return obj;
   }
 
   var path = prop.split('.');
@@ -12,11 +12,11 @@ module.exports = function getValue(o, prop) {
   var len = path.length;
 
   for (var i = 0; i < len; i++) {
-    o = o[path[i]];
-    if (!o) {
-      return o;
+    obj = obj[path[i]];
+    if (!isObject(obj)) {
+      return obj;
     }
   }
 
-  return o[last];
+  return obj[last];
 };

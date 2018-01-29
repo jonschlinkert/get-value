@@ -1,16 +1,23 @@
-#1: deep.js
-  current.js x 1,945,538 ops/sec ±1.32% (96 runs sampled)
-  dot-prop.js x 221,289 ops/sec ±1.17% (94 runs sampled)
-  getobject.js x 210,433 ops/sec ±1.33% (88 runs sampled)
+# benchmark/fixtures/deep.js (175 bytes)
+  dot-prop x 954,982 ops/sec ±1.10% (90 runs sampled)
+  get-value x 1,508,537 ops/sec ±1.18% (89 runs sampled)
 
-  fastest is current.js
-#2: shallow-long.js
-  current.js x 3,500,636 ops/sec ±1.41% (93 runs sampled)
-  dot-prop.js x 741,729 ops/sec ±1.34% (94 runs sampled)
-  getobject.js x 738,596 ops/sec ±1.28% (94 runs sampled)
+  fastest is get-value
 
-  fastest is current.js
-#3: shallow.js
-  current.js x 3,022,134 ops/sec ±1.24% (96 runs sampled)
-  dot-prop.js x 745,885 ops/sec ±1.22% (93 runs sampled)
-  getobject.js x 745,319 ops/sec ±1.14% (93 runs sampled)
+# benchmark/fixtures/root.js (210 bytes)
+  dot-prop x 3,999,758 ops/sec ±0.93% (93 runs sampled)
+  get-value x 17,115,009 ops/sec ±0.93% (87 runs sampled)
+
+  fastest is get-value
+
+# benchmark/fixtures/shallow.js (84 bytes)
+  dot-prop x 2,644,287 ops/sec ±0.88% (91 runs sampled)
+  get-value x 3,521,349 ops/sec ±0.82% (91 runs sampled)
+
+  fastest is get-value
+
+# benchmark/fixtures/escaped.js (149 bytes)
+  dot-prop x 1,514,880 ops/sec ±0.81% (92 runs sampled)
+  get-value x 1,732,718 ops/sec ±1.23% (88 runs sampled)
+
+  fastest is get-value
