@@ -5,7 +5,7 @@ console.log(get('foo', 'foo.bar', false), false);
 console.log(get([], 'foo.bar', false), false);
 console.log(get(undefined, 'foo.bar', false), false);
 
-var obj = { foo: { a: { b: { c: { d: 'e' } } } } };
+const obj = { foo: { a: { b: { c: { d: 'e' } } } } };
 console.log(get(obj, 'foo.a.b.c.d', { default: true }), 'e');
 console.log(get(obj, 'foo.bar.baz', { default: true }), true);
 console.log(get(obj, 'foo.bar.baz', { default: false }),  false);
