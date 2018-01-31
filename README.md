@@ -43,7 +43,7 @@ $ npm install --save get-value
 See the [unit tests](test/test.js) for many more examples.
 
 ```js
-const get = require('foo');
+const get = require('get-value');
 const obj = { a: { b: { c: { d: 'foo' } } } };
 
 console.log(get(obj));            //=> { a: { b: { c: { d: 'foo' } } } };
