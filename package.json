@@ -31,7 +31,8 @@
     "micromatch": "^3.1.5",
     "minimist": "^1.2.0",
     "mocha": "^3.5.3",
-    "nyc": "^11.4.1"
+    "nyc": "^11.4.1",
+    "write": "^1.0.3"
   },
   "keywords": [
     "get",
