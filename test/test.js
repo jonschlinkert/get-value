@@ -1,15 +1,16 @@
 'use strict';
 
 require('mocha');
-var fs = require('fs');
-var path = require('path');
-var argv = require('minimist')(process.argv.slice(2));
-var mm = require('micromatch');
-var units = require('./units');
-var code = path.join.bind(path, __dirname, '../benchmark/code');
+const path = require('path');
+const argv = require('minimist')(process.argv.slice(2));
+const glob = require('glob');
+const mm = require('micromatch');
+const units = require('./units');
+const cwd = path.join.bind(path, __dirname, '../benchmark/code');
 
-var files = (pattern) => {
-  return mm(fs.readdirSync(code()), pattern + '{,.js}').map(f => code(f));
+const files = pattern => {
+  const paths = glob.sync('**/*.js', { cwd: cwd() });
+  return mm(paths, `{,libs/}${pattern}{,.js}`).map(f => cwd(f));
 };
 
 if (argv.bench) {

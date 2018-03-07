@@ -27,11 +27,13 @@
     "benchmarked": "^2.0.0",
     "dot-prop": "^4.2.0",
     "getobject": "^0.1.0",
+    "glob": "^7.1.2",
     "gulp-format-md": "^1.0.0",
     "micromatch": "^3.1.5",
     "minimist": "^1.2.0",
     "mocha": "^3.5.3",
     "nyc": "^11.4.1",
+    "object-path": "^0.11.4",
     "write": "^1.0.3"
   },
   "keywords": [
