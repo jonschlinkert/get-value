@@ -13,7 +13,11 @@ module.exports = function(target, path, options) {
   }
 
   if (!isValidObject(target)) {
-    return options.default != null ? options.default : target;
+    return typeof options.default !== 'undefined' ? options.default : target;
+  }
+
+  if (typeof path === 'number') {
+    path = String(path);
   }
 
   const isArray = Array.isArray(path);
@@ -30,6 +34,8 @@ module.exports = function(target, path, options) {
   }
 
   let segs = isArray ? path : split(path, splitChar, options);
+  if (isArray) segs = segs.map(String);
+
   let len = segs.length;
   let idx = 0;
 
