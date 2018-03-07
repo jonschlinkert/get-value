@@ -34,13 +34,14 @@ module.exports = function(target, path, options) {
   }
 
   let segs = isArray ? path : split(path, splitChar, options);
-  if (isArray) segs = segs.map(String);
-
   let len = segs.length;
   let idx = 0;
 
   do {
     let prop = segs[idx];
+    if (typeof prop === 'number') {
+      prop = String(prop);
+    }
 
     while (prop && prop.slice(-1) === '\\') {
       prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
