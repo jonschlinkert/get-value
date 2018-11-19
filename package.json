@@ -12,12 +12,18 @@
   "files": [
     "index.js"
   ],
-  "main": "index.js",
+  "cdn": "dist/get-value.min.js",
+  "main": "dist/get-value.cjs.js",
+  "unpkg": "dist/get-value.min.js",
+  "module": "dist/get-value.es.js",
+  "jsdelivr": "dist/get-value.min.js",
+  "umd:main": "dist/get-value.js",
   "engines": {
     "node": ">=6.0"
   },
   "scripts": {
-    "test": "nyc --reporter=text --reporter=html mocha"
+    "test": "nyc --reporter=text --reporter=html mocha",
+    "build": "bili"
   },
   "dependencies": {
     "isobject": "^3.0.1"
@@ -25,6 +31,7 @@
   "devDependencies": {
     "arr-reduce": "^1.0.1",
     "benchmarked": "^2.0.0",
+    "bili": "^3.4.1",
     "dot-prop": "^4.2.0",
     "getobject": "^0.1.0",
     "glob": "^7.1.2",

@@ -1,8 +1,17 @@
+/*!
+ * get-value <https://github.com/jonschlinkert/get-value>
+ *
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
 import isObject from 'isobject';
 
-export default function(target, path, options) {
+function index (target, path, options) {
   if (!isObject(options)) {
-    options = { default: options };
+    options = {
+      default: options
+    };
   }
 
   if (!isValidObject(target)) {
@@ -13,10 +22,10 @@ export default function(target, path, options) {
     path = String(path);
   }
 
-  const isArray = Array.isArray(path);
-  const isString = typeof path === 'string';
-  const splitChar = options.separator || '.';
-  const joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
+  var isArray = Array.isArray(path);
+  var isString = typeof path === 'string';
+  var splitChar = options.separator || '.';
+  var joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
 
   if (!isString && !isArray) {
     return target;
@@ -26,12 +35,13 @@ export default function(target, path, options) {
     return isValid(path, target, options) ? target[path] : options.default;
   }
 
-  let segs = isArray ? path : split(path, splitChar, options);
-  let len = segs.length;
-  let idx = 0;
+  var segs = isArray ? path : split(path, splitChar, options);
+  var len = segs.length;
+  var idx = 0;
 
   do {
-    let prop = segs[idx];
+    var prop = segs[idx];
+
     if (typeof prop === 'number') {
       prop = String(prop);
     }
@@ -47,13 +57,13 @@ export default function(target, path, options) {
 
       target = target[prop];
     } else {
-      let hasProp = false;
-      let n = idx + 1;
+      var hasProp = false;
+      var n = idx + 1;
 
       while (n < len) {
         prop = join([prop, segs[n++]], joinChar, options);
 
-        if ((hasProp = prop in target)) {
+        if (hasProp = prop in target) {
           if (!isValid(prop, target, options)) {
             return options.default;
           }
@@ -75,12 +85,13 @@ export default function(target, path, options) {
   }
 
   return options.default;
-};
+}
 
 function join(segs, joinChar, options) {
   if (typeof options.join === 'function') {
     return options.join(segs);
   }
+
   return segs[0] + joinChar + segs[1];
 }
 
@@ -88,6 +99,7 @@ function split(path, splitChar, options) {
   if (typeof options.split === 'function') {
     return options.split(path);
   }
+
   return path.split(splitChar);
 }
 
@@ -95,9 +107,12 @@ function isValid(key, target, options) {
   if (typeof options.isValid === 'function') {
     return options.isValid(key, target);
   }
+
   return true;
 }
 
 function isValidObject(val) {
   return isObject(val) || Array.isArray(val) || typeof val === 'function';
 }
+
+export default index;
