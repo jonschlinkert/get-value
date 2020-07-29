@@ -25,7 +25,7 @@
   "devDependencies": {
     "arr-reduce": "^1.0.1",
     "benchmarked": "^2.0.0",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.2.0",
     "getobject": "^0.1.0",
     "glob": "^7.1.2",
     "gulp-format-md": "^1.0.0",
