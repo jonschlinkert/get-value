@@ -20,7 +20,7 @@
     "test": "nyc --reporter=text --reporter=html mocha"
   },
   "dependencies": {
-    "isobject": "^3.0.1"
+    "isobject": "^4.0.0"
   },
   "devDependencies": {
     "arr-reduce": "^1.0.1",
