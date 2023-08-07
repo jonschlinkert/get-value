@@ -10,31 +10,37 @@
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "dist/index.js"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
   "engines": {
     "node": ">=6.0"
   },
   "scripts": {
+    "bench": "node benchmark",
+    "build": "ncc build index.ts -o dist -t",
     "test": "nyc --reporter=text --reporter=html mocha"
   },
   "dependencies": {
-    "isobject": "^3.0.1"
+    "isobject": "^4.0.0"
   },
   "devDependencies": {
+    "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
+    "@vercel/ncc": "^0.36.1",
     "arr-reduce": "^1.0.1",
     "benchmarked": "^2.0.0",
-    "dot-prop": "^4.2.0",
-    "getobject": "^0.1.0",
-    "glob": "^7.1.2",
-    "gulp-format-md": "^1.0.0",
-    "micromatch": "^3.1.5",
-    "minimist": "^1.2.0",
-    "mocha": "^3.5.3",
-    "nyc": "^11.4.1",
-    "object-path": "^0.11.4",
-    "write": "^1.0.3"
+    "dot-prop": "^6",
+    "getobject": "^1.1.1",
+    "glob": "^10.3.3",
+    "gulp-format-md": "^2.0.0",
+    "micromatch": "^4.0.5",
+    "minimist": "^1.2.8",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "object-path": "^0.11.8",
+    "write": "^2.0.0"
   },
   "keywords": [
     "get",

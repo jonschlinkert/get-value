@@ -1,4 +1,4 @@
-# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/get-value.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/get-value)
+# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value)
 
 > Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them (no other dot-prop library can do this!).
 
@@ -236,28 +236,28 @@ get-value is more reliable and has more features than dot-prop, without sacrific
 
 ```
 # deep (175 bytes)
-  dot-prop x 883,166 ops/sec ±0.93% (86 runs sampled)
-  get-value x 1,448,928 ops/sec ±1.53% (87 runs sampled)
-  getobject x 213,797 ops/sec ±0.85% (90 runs sampled)
-  object-path x 184,347 ops/sec ±2.48% (85 runs sampled)
+  dot-prop x 2,952,929 ops/sec ±0.27% (98 runs sampled)
+  get-value x 3,573,515 ops/sec ±0.15% (98 runs sampled)
+  getobject x 1,314,360 ops/sec ±0.15% (95 runs sampled)
+  object-path x 1,012,995 ops/sec ±0.14% (96 runs sampled)
 
-  fastest is get-value (by 339% avg)
+  fastest is get-value (by 203% avg)
 
 # root (210 bytes)
-  dot-prop x 3,905,828 ops/sec ±1.36% (87 runs sampled)
-  get-value x 16,391,934 ops/sec ±1.43% (83 runs sampled)
-  getobject x 1,200,021 ops/sec ±1.81% (88 runs sampled)
-  object-path x 2,788,494 ops/sec ±1.81% (86 runs sampled)
+  dot-prop x 10,655,419 ops/sec ±0.20% (98 runs sampled)
+  get-value x 49,557,394 ops/sec ±0.15% (97 runs sampled)
+  getobject x 7,555,205 ops/sec ±0.11% (97 runs sampled)
+  object-path x 9,561,347 ops/sec ±0.22% (97 runs sampled)
 
-  fastest is get-value (by 623% avg)
+  fastest is get-value (by 535% avg)
 
 # shallow (84 bytes)
-  dot-prop x 2,553,558 ops/sec ±0.89% (89 runs sampled)
-  get-value x 3,070,159 ops/sec ±0.88% (90 runs sampled)
-  getobject x 726,670 ops/sec ±0.81% (86 runs sampled)
-  object-path x 922,351 ops/sec ±2.05% (86 runs sampled)
+  dot-prop x 7,881,064 ops/sec ±0.11% (97 runs sampled)
+  get-value x 8,432,075 ops/sec ±0.17% (100 runs sampled)
+  getobject x 4,562,909 ops/sec ±0.25% (99 runs sampled)
+  object-path x 4,559,857 ops/sec ±0.12% (100 runs sampled)
 
-  fastest is get-value (by 219% avg)
+  fastest is get-value (by 149% avg)
 
 ```
 
@@ -327,7 +327,7 @@ You might also be interested in these projects:
 * [has-any-deep](https://www.npmjs.com/package/has-any-deep): Return true if `key` exists deeply on the given object.  | [homepage](https://github.com/jonschlinkert/has-any-deep "Return true if `key` exists deeply on the given object. ")
 * [has-any](https://www.npmjs.com/package/has-any): Returns true if an object has any of the specified keys. | [homepage](https://github.com/jonschlinkert/has-any "Returns true if an object has any of the specified keys.")
 * [has-value](https://www.npmjs.com/package/has-value): Returns true if a value exists, false if empty. Works with deeply nested values using… [more](https://github.com/jonschlinkert/has-value) | [homepage](https://github.com/jonschlinkert/has-value "Returns true if a value exists, false if empty. Works with deeply nested values using object paths.")
-* [set-value](https://www.npmjs.com/package/set-value): Create nested values and any intermediaries using dot notation (`'a.b.c'`) paths. | [homepage](https://github.com/jonschlinkert/set-value "Create nested values and any intermediaries using dot notation (`'a.b.c'`) paths.")
+* [set-value](https://www.npmjs.com/package/set-value): Set nested properties on an object using dot notation. | [homepage](https://github.com/jonschlinkert/set-value "Set nested properties on an object using dot notation.")
 * [unset-value](https://www.npmjs.com/package/unset-value): Delete nested properties from an object using dot notation. | [homepage](https://github.com/jonschlinkert/unset-value "Delete nested properties from an object using dot notation.")
 
 ### Contributors
@@ -335,8 +335,8 @@ You might also be interested in these projects:
 | **Commits** | **Contributor** |  
 | --- | --- |  
 | 87 | [jonschlinkert](https://github.com/jonschlinkert) |  
-| 2  | [ianwalter](https://github.com/ianwalter) |  
-| 1  | [doowb](https://github.com/doowb) |  
+| 2  | [doowb](https://github.com/doowb) |  
+| 2  | [felladrin](https://github.com/felladrin) |  
 
 ### Author
 
@@ -348,9 +348,9 @@ You might also be interested in these projects:
 
 ### License
 
-Copyright © 2018, [Jon Schlinkert](https://github.com/jonschlinkert).
+Copyright © 2023, [Jon Schlinkert](https://github.com/jonschlinkert).
 Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on November 17, 2018._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on August 07, 2023._

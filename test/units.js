@@ -1,26 +1,24 @@
-'use strict';
+const assert = require('assert/strict');
 
-const assert = require('assert');
-
-module.exports = function(get) {
-  describe('get value:', function() {
-    it('should return non-object when given as the first argument', function() {
+module.exports = get => {
+  describe('get value:', () => {
+    it('should return non-object when given as the first argument', () => {
       assert.deepStrictEqual(get(null), null);
       assert.deepStrictEqual(get('foo'), 'foo');
       assert.deepStrictEqual(get(['a']), ['a']);
     });
 
-    it('should get a value', function() {
+    it('should get a value', () => {
       assert.deepStrictEqual(get({ a: 'a', b: { c: 'd' } }, 'a'), 'a');
       assert.deepStrictEqual(get({ a: 'a', b: { c: 'd' } }, 'b.c'), 'd');
       assert.deepStrictEqual(get({ foo: 'bar' }, 'foo.bar'), undefined);
     });
 
-    it('should get a property that has dots in the key', function() {
+    it('should get a property that has dots in the key', () => {
       assert.deepStrictEqual(get({ 'a.b': 'c' }, 'a.b'), 'c');
     });
 
-    it('should support using dot notation to get nested values', function() {
+    it('should support using dot notation to get nested values', () => {
       const fixture = {
         a: { locals: { name: { first: 'Brian' } } },
         b: { locals: { name: { last: 'Woodward' } } },
@@ -34,25 +32,25 @@ module.exports = function(get) {
       assert.strictEqual(get(fixture, 'c.locals.paths.2'), 'c.hbs');
     });
 
-    it('should support a custom separator on options.separator', function() {
+    it('should support a custom separator on options.separator', () => {
       const fixture = { 'a.b': { c: { d: 'e' } } };
       assert.strictEqual(get(fixture, 'a.b/c/d', { separator: '/' }), 'e');
       assert.strictEqual(get(fixture, 'a\\.b.c.d', { separator: /\\?\./ }), 'e');
     });
 
-    it('should support a custom split function', function() {
+    it('should support a custom split function', () => {
       const fixture = { 'a.b': { c: { d: 'e' } } };
       assert.strictEqual(get(fixture, 'a.b/c/d', { split: path => path.split('/') }), 'e');
       assert.strictEqual(get(fixture, 'a\\.b.c.d', { split: path => path.split(/\\?\./) }), 'e');
     });
 
-    it('should support a custom join character', function() {
+    it('should support a custom join character', () => {
       const fixture = { 'a-b': { c: { d: 'e' } } };
       const options = { joinChar: '-' };
       assert.strictEqual(get(fixture, 'a.b.c.d', options), 'e');
     });
 
-    it('should support a custom join function', function() {
+    it('should support a custom join function', () => {
       const fixture = { 'a-b': { c: { d: 'e' } } };
       const options = {
         split: path => path.split(/[-\/]/),
@@ -61,7 +59,7 @@ module.exports = function(get) {
       assert.strictEqual(get(fixture, 'a/b-c/d', options), 'e');
     });
 
-    it('should support a default value as the last argument', function() {
+    it('should support a default value as the last argument', () => {
       const fixture = { foo: { c: { d: 'e' } } };
       assert.equal(get(fixture, 'foo.bar.baz', 'quz'), 'quz');
       assert.equal(get(fixture, 'foo.bar.baz', true), true);
@@ -69,7 +67,7 @@ module.exports = function(get) {
       assert.equal(get(fixture, 'foo.bar.baz', null), null);
     });
 
-    it('should support options.default', function() {
+    it('should support options.default', () => {
       const fixture = { foo: { c: { d: 'e' } } };
       assert.equal(get(fixture, 'foo.bar.baz', { default: 'qux' }), 'qux');
       assert.equal(get(fixture, 'foo.bar.baz', { default: true }), true);
@@ -78,10 +76,10 @@ module.exports = function(get) {
       assert.deepStrictEqual(get(fixture, 'foo.bar.baz', { default: { one: 'two' } }), { one: 'two' });
     });
 
-    it('should support a custom function for validating the object', function() {
+    it('should support a custom function for validating the object', () => {
       const isEnumerable = Object.prototype.propertyIsEnumerable;
       const options = {
-        isValid: function(key, obj) {
+        isValid(key, obj) {
           return isEnumerable.call(obj, key);
         }
       };
@@ -90,7 +88,7 @@ module.exports = function(get) {
       assert.strictEqual(get(fixture, 'a.b.c.d', options), 'e');
     });
 
-    it('should support nested keys with dots', function() {
+    it('should support nested keys with dots', () => {
       assert.strictEqual(get({ 'a.b.c': 'd' }, 'a.b.c'), 'd');
       assert.strictEqual(get({ 'a.b': { c: 'd' } }, 'a.b.c'), 'd');
       assert.strictEqual(get({ 'a.b': { c: { d: 'e' } } }, 'a.b.c.d'), 'e');
@@ -126,14 +124,14 @@ module.exports = function(get) {
       assert.strictEqual(get({ a: { b: { 'c.d.e.f': 'g' } } }, 'a.b.c.d.e.f'), 'g');
     });
 
-    it('should support return default when options.isValid returns false', function() {
+    it('should support return default when options.isValid returns false', () => {
       const fixture = { foo: { bar: { baz: 'qux' }, 'a.b.c': 'xyx', yyy: 'zzz' } };
       const options = val => {
         return Object.assign(
           {},
           {
             default: val,
-            isValid: function(key) {
+            isValid(key) {
               return key !== 'bar' && key !== 'a.b.c';
             }
           }
@@ -153,7 +151,7 @@ module.exports = function(get) {
       assert.equal(get(fixture, 'foo.yyy', options('fez')), 'zzz');
     });
 
-    it('should get a value from an array', function() {
+    it('should get a value from an array', () => {
       const fixture = {
         a: { paths: ['a.txt', 'a.js', 'a.hbs'] },
         b: {
@@ -175,40 +173,40 @@ module.exports = function(get) {
       assert.strictEqual(get(fixture, 'b.paths.3'), 'b3.hbs');
     });
 
-    it('should get a value from an object in an array', function() {
+    it('should get a value from an object in an array', () => {
       assert.strictEqual(get({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'), 'd');
       assert.strictEqual(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'), 'f');
     });
 
-    it('should return `undefined` if the path is not found', function() {
+    it('should return `undefined` if the path is not found', () => {
       const fixture = { a: { b: {} } };
       assert.strictEqual(get(fixture, 'a.b.c'), undefined);
       assert.strictEqual(get(fixture, 'a.b.c.d'), undefined);
     });
 
-    it('should get the specified property', function() {
+    it('should get the specified property', () => {
       assert.deepStrictEqual(get({ a: 'aaa', b: 'b' }, 'a'), 'aaa');
       assert.deepStrictEqual(get({ first: 'Jon', last: 'Schlinkert' }, 'first'), 'Jon');
       assert.deepStrictEqual(get({ locals: { a: 'a' }, options: { b: 'b' } }, 'locals'), { a: 'a' });
     });
 
-    it('should support passing a property formatted as an array', function() {
+    it('should support passing a property formatted as an array', () => {
       assert.deepStrictEqual(get({ a: 'aaa', b: 'b' }, ['a']), 'aaa');
       assert.deepStrictEqual(get({ a: { b: { c: 'd' } } }, ['a', 'b', 'c']), 'd');
       assert.deepStrictEqual(get({ first: 'Harry', last: 'Potter' }, ['first']), 'Harry');
       assert.deepStrictEqual(get({ locals: { a: 'a' }, options: { b: 'b' } }, ['locals']), { a: 'a' });
     });
 
-    it('should support escaped dots', function() {
+    it('should support escaped dots', () => {
       assert.deepStrictEqual(get({ 'a.b': 'a', b: { c: 'd' } }, 'a\\.b'), 'a');
       assert.deepStrictEqual(get({ 'a.b': { b: { c: 'd' } } }, 'a\\.b.b.c'), 'd');
     });
 
-    it('should get the value of a deeply nested property', function() {
+    it('should get the value of a deeply nested property', () => {
       assert.strictEqual(get({ a: { b: 'c', c: { d: 'e', e: 'f', g: { h: 'i' } } } }, 'a.c.g.h'), 'i');
     });
 
-    it('should return the entire object if no property is passed', function() {
+    it('should return the entire object if no property is passed', () => {
       assert.deepStrictEqual(get({ a: 'a', b: { c: 'd' } }), { a: 'a', b: { c: 'd' } });
     });
   });
@@ -217,8 +215,8 @@ module.exports = function(get) {
    * These tests are from the "dot-prop" library
    */
 
-  describe('dot-prop tests:', function() {
-    it('should pass dot-prop tests', function() {
+  describe('dot-prop tests:', () => {
+    it('should pass dot-prop tests', () => {
       const f1 = { foo: { bar: 1 } };
       assert.deepStrictEqual(get(f1), f1);
       f1[''] = 'foo';
@@ -258,7 +256,7 @@ module.exports = function(get) {
       assert.deepStrictEqual(get(undefined, 'foo.bar', false), false);
     });
 
-    it('should use a custom options.isValid function', function() {
+    it('should use a custom options.isValid function', () => {
       const isEnumerable = Object.prototype.propertyIsEnumerable;
       const options = {
         isValid: (key, obj) => isEnumerable.call(obj, key)
@@ -274,13 +272,13 @@ module.exports = function(get) {
       assert.deepStrictEqual(get({}, 'hasOwnProperty', options), undefined);
     });
 
-    it('should return a default value', function() {
+    it('should return a default value', () => {
       assert.deepStrictEqual(get({ foo: { bar: 'a' } }, 'foo.fake'), undefined);
       assert.deepStrictEqual(get({ foo: { bar: 'a' } }, 'foo.fake.fake2'), undefined);
       assert.deepStrictEqual(get({ foo: { bar: 'a' } }, 'foo.fake.fake2', 'some value'), 'some value');
     });
 
-    it('should pass all of the dot-prop tests', function() {
+    it('should pass all of the dot-prop tests', () => {
       const f1 = { foo: { bar: 1 } };
       assert.deepStrictEqual(get(f1), f1);
       assert.deepStrictEqual(get(f1, 'foo'), f1.foo);
@@ -298,7 +296,7 @@ module.exports = function(get) {
    * These tests are from the "object-path" library
    */
 
-  describe('object-path .get tests', function() {
+  describe('object-path .get tests', () => {
     function getTestObj() {
       return {
         a: 'b',
@@ -311,72 +309,72 @@ module.exports = function(get) {
       };
     }
 
-    it('should return the value using unicode key', function() {
+    it('should return the value using unicode key', () => {
       const obj = { '15\u00f8C': { '3\u0111': 1 } };
       assert.equal(get(obj, '15\u00f8C.3\u0111'), 1);
       assert.equal(get(obj, ['15\u00f8C', '3\u0111']), 1);
     });
 
-    it('should return the value using dot in key (with array of segments)', function() {
+    it('should return the value using dot in key (with array of segments)', () => {
       const obj = { 'a.b': { 'looks.like': 1 } };
       assert.equal(get(obj, ['a.b', 'looks.like']), 1);
     });
 
     // object-path fails this test
-    it('should return the value using dot in key', function() {
+    it('should return the value using dot in key', () => {
       const obj = { 'a.b': { 'looks.like': 1 } };
       assert.equal(get(obj, 'a.b.looks.like'), 1);
     });
 
-    it('should return the value under shallow object', function() {
+    it('should return the value under shallow object', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'a'), 'b');
       assert.equal(get(obj, ['a']), 'b');
     });
 
-    it('should work with number path', function() {
+    it('should work with number path', () => {
       const obj = getTestObj();
       assert.equal(get(obj.b.d, 0), 'a');
       assert.equal(get(obj.b, 0), undefined);
     });
 
-    it('should return the value under deep object', function() {
+    it('should return the value under deep object', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'b.f'), 'i');
       assert.equal(get(obj, ['b', 'f']), 'i');
     });
 
-    it('should return the value under array', function() {
+    it('should return the value under array', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'b.d.0'), 'a');
       assert.equal(get(obj, ['b', 'd', 0]), 'a');
     });
 
-    it('should return the value under array deep', function() {
+    it('should return the value under array deep', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'b.e.1.f'), 'g');
       assert.equal(get(obj, ['b', 'e', 1, 'f']), 'g');
     });
 
-    it('should return undefined for missing values under object', function() {
+    it('should return undefined for missing values under object', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'a.b'), undefined);
       assert.equal(get(obj, ['a', 'b']), undefined);
     });
 
-    it('should return undefined for missing values under array', function() {
+    it('should return undefined for missing values under array', () => {
       const obj = getTestObj();
       assert.equal(get(obj, 'b.d.5'), undefined);
       assert.equal(get(obj, ['b', 'd', '5']), undefined);
     });
 
-    it('should return the value under integer-like key', function() {
+    it('should return the value under integer-like key', () => {
       const obj = { '1a': 'foo' };
       assert.equal(get(obj, '1a'), 'foo');
       assert.equal(get(obj, ['1a']), 'foo');
     });
 
-    it('should return the default value when the key doesnt exist', function() {
+    it('should return the default value when the key doesnt exist', () => {
       const obj = { '1a': 'foo' };
       assert.equal(get(obj, '1b', null), null);
       assert.equal(get(obj, ['1b'], null), null);
@@ -384,14 +382,14 @@ module.exports = function(get) {
 
     // this test differs from behavior in object-path. I was unable to figure
     // out exactly how the default values work in object-path.
-    it('should return the default value when path is empty', function() {
+    it('should return the default value when path is empty', () => {
       const obj = { '1a': 'foo' };
       assert.deepStrictEqual(get(obj, '', null), null);
       assert.deepStrictEqual(get(obj, []), undefined);
       assert.equal(get({}, ['1'], 'foo'), 'foo');
     });
 
-    it('should return the default value when object is null or undefined', function() {
+    it('should return the default value when object is null or undefined', () => {
       assert.deepStrictEqual(get(null, 'test', 'a'), 'a');
       assert.deepStrictEqual(get(undefined, 'test', 'a'), 'a');
     });
@@ -405,20 +403,43 @@ module.exports = function(get) {
 
     // this differs from object-path, which does not allow
     // the user to get non-own properties for some reason.
-    it('should get non-"own" properties', function() {
-      const Base = function(enabled) {};
+    it('should get non-"own" properties on function classes', () => {
+      const Base = function() {};
+
       Base.prototype = {
         one: {
           two: true
         }
       };
+
       const Extended = function() {
         Base.call(this, true);
       };
+
       Extended.prototype = Object.create(Base.prototype);
 
       const extended = new Extended();
 
+      assert.equal(get(extended, 'one.two'), true);
+      assert.equal(get(extended, ['one', 'two']), true);
+      extended.enabled = true;
+
+      assert.equal(get(extended, 'enabled'), true);
+      assert.deepStrictEqual(get(extended, 'one'), { two: true });
+    });
+
+    // this differs from object-path, which does not allow
+    // the user to get non-own properties for some reason.
+    it('should get non-"own" properties on classes', () => {
+      class Base {
+        one = { two: true };
+      }
+
+      class Extended extends Base {}
+
+      const extended = new Extended();
+
+      assert.equal(get(extended, 'one.two'), true);
       assert.equal(get(extended, ['one', 'two']), true);
       extended.enabled = true;
 
@@ -427,8 +448,8 @@ module.exports = function(get) {
     });
   });
 
-  describe('deep-property unit tests', function() {
-    it('should handle invalid input', function() {
+  describe('deep-property unit tests', () => {
+    it('should handle invalid input', () => {
       const a = undefined;
       const b = {};
 
@@ -438,8 +459,8 @@ module.exports = function(get) {
       assert.deepStrictEqual(get(b, '...'), undefined);
     });
 
-    it('should get shallow properties', function() {
-      const fn = function() {};
+    it('should get shallow properties', () => {
+      const fn = () => {};
       const a = {
         sample: 'string',
         example: fn,
@@ -452,7 +473,7 @@ module.exports = function(get) {
       assert.equal(get(a, 'invalid'), undefined);
     });
 
-    it('should get deep properties', function() {
+    it('should get deep properties', () => {
       const a = {
         b: { example: { type: 'vegetable' } },
         c: { example: { type: 'mineral' } }
@@ -463,8 +484,8 @@ module.exports = function(get) {
       assert.equal(get(a, 'c.gorky.type'), undefined);
     });
 
-    it('should get properties on non-objects', function() {
-      const fn = function() {};
+    it('should get properties on non-objects', () => {
+      const fn = () => {};
 
       // the commented out lines are from from the "deep-property" lib,
       // but it's invalid javascript. This is a good example of why it's always

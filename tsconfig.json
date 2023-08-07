@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "lib": ["ES2022"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": ["node"],
+    "noEmit": true
+  },
+
+  "ts-node": {
+    "files": true,
+    "transpileOnly": true,
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true,
+      "checkJs": false,
+      "esModuleInterop": true,
+      "noEmit": true,
+      "moduleResolution": "node",
+      "types": ["node"],
+      "target": "ES2022"
+    }
+  },
+
+  "exclude": ["tmp"]
+}

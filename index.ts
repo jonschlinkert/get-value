@@ -1,13 +1,63 @@
 /*!
  * get-value <https://github.com/jonschlinkert/get-value>
  *
- * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Copyright (c) 2014-present, Jon Schlinkert.
  * Released under the MIT License.
  */
 
-const isObject = require('isobject');
+import isObject from 'isobject';
 
-module.exports = function(target, path, options) {
+interface Options {
+  default?: any;
+  separator?: string;
+  joinChar?: string;
+}
+
+const join = (
+  segs: string[],
+  joinChar: string,
+  options: { join?: Function }
+): string => {
+  if (typeof options.join === 'function') {
+    return options.join(segs);
+  }
+  return segs[0] + joinChar + segs[1];
+};
+
+const split = (
+  path: string,
+  splitChar: string,
+  options: { split?: Function }
+): string[] => {
+  if (typeof options.split === 'function') {
+    return options.split(path);
+  }
+
+  return path.split(splitChar);
+};
+
+const isValid = (
+  key: string,
+  target: {},
+  options: { isValid?: Function }
+): boolean => {
+  if (typeof options.isValid === 'function') {
+    return options.isValid(key, target);
+  }
+
+  return true;
+};
+
+const isValidObject = (val: unknown): boolean => {
+  return isObject(val) || Array.isArray(val) || typeof val === 'function';
+};
+
+// eslint-disable-next-line complexity
+const getValue = (
+  target: {},
+  path: string | number | string[],
+  options: Options = {}
+): any => {
   if (!isObject(options)) {
     options = { default: options };
   }
@@ -20,25 +70,26 @@ module.exports = function(target, path, options) {
     path = String(path);
   }
 
-  const isArray = Array.isArray(path);
-  const isString = typeof path === 'string';
+  const pathIsArray = Array.isArray(path);
+  const pathIsString = typeof path === 'string';
   const splitChar = options.separator || '.';
   const joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
 
-  if (!isString && !isArray) {
+  if (!pathIsString && !pathIsArray) {
     return target;
   }
 
-  if (isString && path in target) {
+  if (pathIsString && path in target) {
     return isValid(path, target, options) ? target[path] : options.default;
   }
 
-  let segs = isArray ? path : split(path, splitChar, options);
-  let len = segs.length;
+  const segs = pathIsArray ? path : split(path, splitChar, options);
+  const len = segs.length;
   let idx = 0;
 
   do {
     let prop = segs[idx];
+
     if (typeof prop === 'number') {
       prop = String(prop);
     }
@@ -84,27 +135,4 @@ module.exports = function(target, path, options) {
   return options.default;
 };
 
-function join(segs, joinChar, options) {
-  if (typeof options.join === 'function') {
-    return options.join(segs);
-  }
-  return segs[0] + joinChar + segs[1];
-}
-
-function split(path, splitChar, options) {
-  if (typeof options.split === 'function') {
-    return options.split(path);
-  }
-  return path.split(splitChar);
-}
-
-function isValid(key, target, options) {
-  if (typeof options.isValid === 'function') {
-    return options.isValid(key, target);
-  }
-  return true;
-}
-
-function isValidObject(val) {
-  return isObject(val) || Array.isArray(val) || typeof val === 'function';
-}
+export default getValue;
