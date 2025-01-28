@@ -1,6 +1,6 @@
-# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/get-value.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/get-value)
+# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value)
 
-> Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them (no other dot-prop library can do this!).
+> Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them (no other dot-prop library we tested does this, or does it correctly).
 
 Please consider following this project's author, [Jon Schlinkert](https://github.com/jonschlinkert), and consider starring the project to show your :heart: and support.
 
@@ -25,6 +25,7 @@ Please consider following this project's author, [Jon Schlinkert](https://github
 - [Benchmarks](#benchmarks)
   * [Running the benchmarks](#running-the-benchmarks)
 - [Release history](#release-history)
+  * [v4.0.0](#v400)
   * [v3.0.0](#v300)
 - [About](#about)
 
@@ -68,10 +69,10 @@ console.log(get({ 'a.b': { c: { 'd.e': 'f' } } }, 'a.b.c.d.e'));
 ### Supports arrays
 
 ```js
-console.log(get({ a: { b: { c: { d: 'foo' } } }, e: [{ f: 'g' }, { f: 'h' }] }, 'e.1.f'));   
+console.log(get({ a: { b: { c: { d: 'foo' } } }, e: [{ f: 'g' }, { f: 'h' }] }, 'e.1.f'));
 //=> 'h'
 
-console.log(get({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c')); 
+console.log(get({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'));
 //=> 'd'
 
 console.log(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'));
@@ -84,13 +85,13 @@ console.log(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'));
 function foo() {}
 foo.bar = { baz: 'qux' };
 
-console.log(get(foo));            
+console.log(get(foo));
 //=> { [Function: foo] bar: { baz: 'qux' } }
 
-console.log(get(foo, 'bar'));     
+console.log(get(foo, 'bar'));
 //=> { baz: 'qux' }
 
-console.log(get(foo, 'bar.baz')); 
+console.log(get(foo, 'bar.baz'));
 //=> qux
 ```
 
@@ -187,10 +188,10 @@ The separator to use for spliting the string (this is probably not needed when `
 ```js
 const obj = { 'a.b': { c: { d: 'e' } } };
 
-console.log(get(obj, 'a.b/c/d', { separator: '/' }));       
+console.log(get(obj, 'a.b/c/d', { separator: '/' }));
 //=> 'e'
 
-console.log(get(obj, 'a\\.b.c.d', { separator: /\\?\./ })); 
+console.log(get(obj, 'a\\.b.c.d', { separator: /\\?\./ }));
 //=> 'e'
 ```
 
@@ -224,7 +225,7 @@ The character to use when re-joining the string to check for keys with dots in t
 ```js
 const target = { 'a-b': { c: { d: 'e' } } };
 const options = { joinChar: '-' };
-console.log(get(target, 'a.b.c.d', options)); 
+console.log(get(target, 'a.b.c.d', options));
 //=> 'e'
 ```
 
@@ -235,29 +236,32 @@ _(benchmarks were run on a MacBook Pro 2.5 GHz Intel Core i7, 16 GB 1600 MHz DDR
 get-value is more reliable and has more features than dot-prop, without sacrificing performance.
 
 ```
-# deep (175 bytes)
-  dot-prop x 883,166 ops/sec ±0.93% (86 runs sampled)
-  get-value x 1,448,928 ops/sec ±1.53% (87 runs sampled)
-  getobject x 213,797 ops/sec ±0.85% (90 runs sampled)
-  object-path x 184,347 ops/sec ±2.48% (85 runs sampled)
+# deep (338 bytes)
+  dot-prop x 2,899,778 ops/sec ±0.43% (98 runs sampled)
+  dotty x 2,139,156 ops/sec ±0.27% (97 runs sampled)
+  get-value x 3,864,449 ops/sec ±0.88% (100 runs sampled)
+  getobject x 1,221,163 ops/sec ±1.13% (98 runs sampled)
+  object-path x 993,432 ops/sec ±1.11% (96 runs sampled)
 
-  fastest is get-value (by 339% avg)
+  fastest is get-value (by 33% avg)
 
-# root (210 bytes)
-  dot-prop x 3,905,828 ops/sec ±1.36% (87 runs sampled)
-  get-value x 16,391,934 ops/sec ±1.43% (83 runs sampled)
-  getobject x 1,200,021 ops/sec ±1.81% (88 runs sampled)
-  object-path x 2,788,494 ops/sec ±1.81% (86 runs sampled)
+# root (215 bytes)
+  dot-prop x 24,357,281 ops/sec ±1.85% (90 runs sampled)
+  dotty x 18,173,291 ops/sec ±0.69% (93 runs sampled)
+  get-value x 37,147,377 ops/sec ±1.60% (90 runs sampled)
+  getobject x 8,675,247 ops/sec ±1.79% (95 runs sampled)
+  object-path x 12,776,129 ops/sec ±0.73% (96 runs sampled)
 
-  fastest is get-value (by 623% avg)
+  fastest is get-value (by 53% avg)
 
-# shallow (84 bytes)
-  dot-prop x 2,553,558 ops/sec ±0.89% (89 runs sampled)
-  get-value x 3,070,159 ops/sec ±0.88% (90 runs sampled)
-  getobject x 726,670 ops/sec ±0.81% (86 runs sampled)
-  object-path x 922,351 ops/sec ±2.05% (86 runs sampled)
+# shallow (91 bytes)
+  dot-prop x 12,739,600 ops/sec ±0.60% (90 runs sampled)
+  dotty x 9,886,136 ops/sec ±0.98% (95 runs sampled)
+  get-value x 11,696,815 ops/sec ±0.77% (97 runs sampled)
+  getobject x 4,714,011 ops/sec ±0.47% (98 runs sampled)
+  object-path x 4,943,245 ops/sec ±2.26% (97 runs sampled)
 
-  fastest is get-value (by 219% avg)
+  fastest is dot-prop (by 9% avg)
 
 ```
 
@@ -276,6 +280,15 @@ $ npm install && node benchmark
 ```
 
 ## Release history
+
+### v4.0.0
+
+* Refactored to typescript
+* Added support for handling deep property paths with arrays
+* Improved performance on large nested objects
+* Fixed edge case issues with keys containing special characters.
+* Updated benchmarks
+* Updated documentation to reflect new features and bug fixes.
 
 ### v3.0.0
 
@@ -327,16 +340,18 @@ You might also be interested in these projects:
 * [has-any-deep](https://www.npmjs.com/package/has-any-deep): Return true if `key` exists deeply on the given object.  | [homepage](https://github.com/jonschlinkert/has-any-deep "Return true if `key` exists deeply on the given object. ")
 * [has-any](https://www.npmjs.com/package/has-any): Returns true if an object has any of the specified keys. | [homepage](https://github.com/jonschlinkert/has-any "Returns true if an object has any of the specified keys.")
 * [has-value](https://www.npmjs.com/package/has-value): Returns true if a value exists, false if empty. Works with deeply nested values using… [more](https://github.com/jonschlinkert/has-value) | [homepage](https://github.com/jonschlinkert/has-value "Returns true if a value exists, false if empty. Works with deeply nested values using object paths.")
-* [set-value](https://www.npmjs.com/package/set-value): Create nested values and any intermediaries using dot notation (`'a.b.c'`) paths. | [homepage](https://github.com/jonschlinkert/set-value "Create nested values and any intermediaries using dot notation (`'a.b.c'`) paths.")
+* [set-value](https://www.npmjs.com/package/set-value): Set nested properties on an object using dot notation. | [homepage](https://github.com/jonschlinkert/set-value "Set nested properties on an object using dot notation.")
 * [unset-value](https://www.npmjs.com/package/unset-value): Delete nested properties from an object using dot notation. | [homepage](https://github.com/jonschlinkert/unset-value "Delete nested properties from an object using dot notation.")
 
 ### Contributors
 
-| **Commits** | **Contributor** |  
-| --- | --- |  
-| 87 | [jonschlinkert](https://github.com/jonschlinkert) |  
-| 2  | [ianwalter](https://github.com/ianwalter) |  
-| 1  | [doowb](https://github.com/doowb) |  
+| **Commits** | **Contributor** |
+| --- | --- |
+| 89 | [jonschlinkert](https://github.com/jonschlinkert) |
+| 2  | [doowb](https://github.com/doowb) |
+| 2  | [felladrin](https://github.com/felladrin) |
+| 1  | [onokumus](https://github.com/onokumus) |
+| 1  | [joepie91](https://github.com/joepie91) |
 
 ### Author
 
@@ -348,9 +363,9 @@ You might also be interested in these projects:
 
 ### License
 
-Copyright © 2018, [Jon Schlinkert](https://github.com/jonschlinkert).
+Copyright © 2025, [Jon Schlinkert](https://github.com/jonschlinkert).
 Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on November 17, 2018._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on January 28, 2025._

@@ -1,6 +1,6 @@
 {
   "name": "get-value",
-  "description": "Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them.",
+  "description": "Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them (no other dot-prop library we tested does this, or does it correctly).",
   "version": "3.0.1",
   "homepage": "https://github.com/jonschlinkert/get-value",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
@@ -9,32 +9,45 @@
     "url": "https://github.com/jonschlinkert/get-value/issues"
   },
   "license": "MIT",
-  "files": [
-    "index.js"
-  ],
-  "main": "index.js",
-  "engines": {
-    "node": ">=6.0"
-  },
   "scripts": {
-    "test": "nyc --reporter=text --reporter=html mocha"
+    "bench": "node benchmark",
+    "eslint": "npx eslint --ext .ts .",
+    "coverage": "nyc --reporter=text --reporter=html",
+    "test": "ts-mocha -r esbuild-register 'test/**/*.ts'",
+    "tsup": "npx tsup"
   },
-  "dependencies": {
-    "isobject": "^4.0.0"
+  "files": [
+    "dist/index.js"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
   },
   "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
     "arr-reduce": "^1.0.1",
-    "benchmarked": "^2.0.0",
-    "dot-prop": "^4.2.0",
-    "getobject": "^0.1.0",
-    "glob": "^7.1.2",
-    "gulp-format-md": "^1.0.0",
-    "micromatch": "^3.1.5",
-    "minimist": "^1.2.0",
-    "mocha": "^3.5.3",
-    "nyc": "^11.4.1",
-    "object-path": "^0.11.4",
-    "write": "^1.0.3"
+    "dot-prop": "^9.0.0",
+    "dotty": "^0.1.2",
+    "esbuild-register": "^3.5.0",
+    "eslint": "^8.57.0",
+    "getobject": "^1.1.1",
+    "gulp-format-md": "^2.0.0",
+    "micromatch": "^4.0.5",
+    "minimist": "^1.2.8",
+    "nyc": "^17.1.0",
+    "object-path": "^0.11.8",
+    "prettier": "^3.4.2",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.4.5"
   },
   "keywords": [
     "get",

@@ -1,5 +1,5 @@
 
-var isObject = require('isobject');
+const isObject = require('isobject');
 
 module.exports = function getValue(obj, str, fn) {
   if (obj == null || !isObject(obj)) {
@@ -10,7 +10,7 @@ module.exports = function getValue(obj, str, fn) {
     return obj;
   }
 
-  var path;
+  let path;
 
   if (fn && typeof fn === 'function') {
     path = fn(str);
@@ -23,12 +23,12 @@ module.exports = function getValue(obj, str, fn) {
     path = str.split('.');
   }
 
-  var len = path.length;
-  var i = 0;
-  var last;
+  const len = path.length;
+  let i = 0;
+  let last;
 
   while (i < len) {
-    var key = path[i];
+    const key = path[i];
     last = obj[key];
     if (last == null) {
       return {};
@@ -42,8 +42,8 @@ module.exports = function getValue(obj, str, fn) {
 };
 
 function replaceStr(str, token, replacement) {
-  var i = str.indexOf(token);
-  var end = i + token.length;
+  const i = str.indexOf(token);
+  const end = i + token.length;
   str = str.substr(0, i) + replacement + str.substr(end, str.length);
   if (str.indexOf(token, end) !== -1) {
     str = str.replace(token, replacement);

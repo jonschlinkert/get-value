@@ -1,4 +1,4 @@
-const get = require('..');
+import getValue from '..';
 
-console.log(get({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'), 'd');
-console.log(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'), 'f');
+console.log(getValue({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'), 'd');
+console.log(getValue({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'), 'f');

@@ -1,6 +1,6 @@
 const isObject = require('isobject');
 
-module.exports = function(target, path, escape) {
+module.exports = function(target, path) {
   if (!isObject(target) && !Array.isArray(target)) {
     return target;
   }
@@ -21,20 +21,20 @@ module.exports = function(target, path, escape) {
   let idx = 0;
 
   do {
-    let seg = segs[idx];
+    const seg = segs[idx];
 
     if (seg in obj) {
       obj = obj[seg];
       continue;
     }
 
-    let rest = segs.slice();
+    const rest = segs.slice();
     let hasProp = false;
 
     do {
       const prop = rest.join('.');
 
-      if ((hasProp = (prop in obj))) {
+      if ((hasProp = prop in obj)) {
         segs = segs.slice(rest.length);
         obj = obj[prop];
         --idx;

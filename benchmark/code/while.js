@@ -7,10 +7,10 @@ function getValue(o, prop) {
     return o;
   }
 
-  var path = prop.split('.');
-  var last = path.pop();
-  var len = path.length;
-  var i = 0;
+  const path = prop.split('.');
+  const last = path.pop();
+  let len = path.length;
+  let i = 0;
 
   while (len--) {
     o = o[path[i++]];
@@ -18,4 +18,4 @@ function getValue(o, prop) {
   }
 
   return o[last];
-};
+}

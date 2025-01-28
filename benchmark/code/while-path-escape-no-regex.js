@@ -1,5 +1,5 @@
 
-var isObject = require('isobject');
+const isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
   if (o == null || !isObject(o)) {
@@ -10,15 +10,15 @@ module.exports = function getValue(o, prop) {
   }
 
   prop = replaceStr(prop, '\\.', '___DOT___');
-  var path = prop.split('.').map(function(seg) {
+  const path = prop.split('.').map(function(seg) {
     return replaceStr(seg, '___DOT___', '.');
   });
 
-  var last = path.pop();
-  var len = path.length;
+  const last = path.pop();
+  const len = path.length;
 
-  for (var i = 0; i < len; i++) {
-    var key = path[i];
+  for (let i = 0; i < len; i++) {
+    const key = path[i];
     o = o[key];
     if (o == null) {
       return {};
@@ -28,7 +28,7 @@ module.exports = function getValue(o, prop) {
 };
 
 function replaceStr(str, pattern, replacement) {
-  var i, from = 0;
+  let i; let from = 0;
   while (str.indexOf(pattern, from) !== -1) {
     i = str.indexOf(pattern, from);
     from = i + pattern.length;

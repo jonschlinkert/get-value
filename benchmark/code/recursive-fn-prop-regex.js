@@ -29,7 +29,7 @@ module.exports = function(target, path) {
         return lookup();
       }
 
-      let rest = segs.slice();
+      const rest = segs.slice();
 
       do {
         prop = rest.join('.');

@@ -33,13 +33,13 @@ module.exports = function(target, path) {
       continue;
     }
 
-    let rest = segs.slice();
+    const rest = segs.slice();
     let hasProp = false;
 
     do {
       const prop = rest.join('.');
 
-      if ((hasProp = (prop in obj))) {
+      if ((hasProp = prop in obj)) {
         segs = segs.slice(rest.length);
         obj = obj[prop];
         break;

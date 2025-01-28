@@ -1,1 +1,3 @@
-module.exports = require('dot-prop').get;
+const dotProp = require('dot-prop');
+
+module.exports = dotProp.getProperty;

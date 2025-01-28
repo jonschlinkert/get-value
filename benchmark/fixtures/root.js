@@ -14,7 +14,7 @@ module.exports = [{
   i: 'I',
   j: 'J',
   k: 'K',
-  l: {i: {k: 'L'}},
+  l: { i: { k: 'L' } },
   m: 'M',
   n: 'N'
 }, 'l'];

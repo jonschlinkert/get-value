@@ -1,0 +1,20 @@
+{
+  "name": "get-value-benchmarks",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "bench": "node index.js"
+  },
+  "devDependencies": {
+    "arr-reduce": "^1.0.1",
+    "benchmarked": "^2.0.0",
+    "dot-prop": "^9.0.0",
+    "getobject": "^1.1.1",
+    "minimist": "^1.2.8",
+    "object-path": "^0.11.8",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.4.5",
+    "write": "^2.0.0"
+  }
+}

@@ -1,1 +1,3 @@
-module.exports = require('object-path').get;
+const objectPath = require('object-path');
+
+module.exports = objectPath.get;

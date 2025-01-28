@@ -1,10 +1,10 @@
-const get = require('..');
+import getValue from '..';
 
-console.log(get({ files: { 'foo/bar.md': { b: 'c' } } }, 'files.foo/bar.md'));
+console.log(getValue({ files: { 'foo/bar.md': { b: 'c' } } }, 'files.foo/bar.md'));
 //=> { b: c }
 
-console.log(get({ 'a.b': { c: 'd' } }, 'a.b.c'));
+console.log(getValue({ 'a.b': { c: 'd' } }, 'a.b.c'));
 //=> 'd'
 
-console.log(get({ 'a.b': { c: { 'd.e': 'f' } } }, 'a.b.c.d.e'));
+console.log(getValue({ 'a.b': { c: { 'd.e': 'f' } } }, 'a.b.c.d.e'));
 //=> 'f'

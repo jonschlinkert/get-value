@@ -1,5 +1,5 @@
 
-var isObject = require('isobject');
+const isObject = require('isobject');
 
 module.exports = function getValue(o, prop) {
   if (o == null || !isObject(o)) {
@@ -10,15 +10,15 @@ module.exports = function getValue(o, prop) {
   }
 
   prop = prop.replace(/\\\./g, '___DOT___');
-  var path = prop.split('.').map(function(seg) {
+  const path = prop.split('.').map(function(seg) {
     return seg.replace(/___DOT___/g, '.');
   });
 
-  var last = path.pop();
-  var len = path.length;
+  const last = path.pop();
+  const len = path.length;
 
-  for (var i = 0; i < len; i++) {
-    var key = path[i];
+  for (let i = 0; i < len; i++) {
+    const key = path[i];
     o = o[key];
     if (o == null) {
       return {};
