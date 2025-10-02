@@ -41,7 +41,7 @@ $ npm install --save get-value
 
 ## Usage
 
-See the [unit tests](test/test.js) for many more examples.
+See the [unit tests](test/units.ts) for many more examples.
 
 ```js
 const get = require('get-value');
