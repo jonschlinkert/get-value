@@ -1,4 +1,4 @@
-# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value)
+# get-value [![NPM version](https://img.shields.io/npm/v/get-value.svg?style=flat)](https://www.npmjs.com/package/get-value) [![NPM monthly downloads](https://img.shields.io/npm/dm/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![NPM total downloads](https://img.shields.io/npm/dt/get-value.svg?style=flat)](https://npmjs.org/package/get-value) [![GitHub Workflow Status](https://github.com/jonschlinkert/get-value/actions/workflows/test.yml/badge.svg)](https://github.com/jonschlinkert/get-value/actions/workflows/test.yml)
 
 > Use property paths like 'a.b.c' to get a nested value from an object. Even works when keys have dots in them (no other dot-prop library we tested does this, or does it correctly).
 
@@ -25,6 +25,7 @@ Please consider following this project's author, [Jon Schlinkert](https://github
 - [Benchmarks](#benchmarks)
   * [Running the benchmarks](#running-the-benchmarks)
 - [Release history](#release-history)
+  * [v4.1.0](#v410)
   * [v4.0.0](#v400)
   * [v3.0.0](#v300)
 - [About](#about)
@@ -44,38 +45,42 @@ $ npm install --save get-value
 See the [unit tests](test/test.js) for many more examples.
 
 ```js
-const get = require('get-value');
+import getValue from 'get-value';
+// or
+import { getValue } from 'get-value';
+// or
+const getValue = require('get-value');
 const obj = { a: { b: { c: { d: 'foo' } } } };
 
-console.log(get(obj));            //=> { a: { b: { c: { d: 'foo' } } } };
-console.log(get(obj, 'a'));       //=> { b: { c: { d: 'foo' } } }
-console.log(get(obj, 'a.b'));     //=> { c: { d: 'foo' } }
-console.log(get(obj, 'a.b.c'));   //=> { d: 'foo' }
-console.log(get(obj, 'a.b.c.d')); //=> 'foo'
+console.log(getValue(obj));            //=> { a: { b: { c: { d: 'foo' } } } };
+console.log(getValue(obj, 'a'));       //=> { b: { c: { d: 'foo' } } }
+console.log(getValue(obj, 'a.b'));     //=> { c: { d: 'foo' } }
+console.log(getValue(obj, 'a.b.c'));   //=> { d: 'foo' }
+console.log(getValue(obj, 'a.b.c.d')); //=> 'foo'
 ```
 
 ### Supports keys with dots
 
-Unlike other dot-prop libraries, get-value works when keys have dots in them:
+Unlike other dot-prop libraries, `get-value` works when keys have dots in them:
 
 ```js
-console.log(get({ 'a.b': { c: 'd' } }, 'a.b.c'));
+console.log(getValue({ 'a.b': { c: 'd' } }, 'a.b.c'));
 //=> 'd'
 
-console.log(get({ 'a.b': { c: { 'd.e': 'f' } } }, 'a.b.c.d.e'));
+console.log(getValue({ 'a.b': { c: { 'd.e': 'f' } } }, 'a.b.c.d.e'));
 //=> 'f'
 ```
 
 ### Supports arrays
 
 ```js
-console.log(get({ a: { b: { c: { d: 'foo' } } }, e: [{ f: 'g' }, { f: 'h' }] }, 'e.1.f'));
+console.log(getValue({ a: { b: { c: { d: 'foo' } } }, e: [{ f: 'g' }, { f: 'h' }] }, 'e.1.f'));
 //=> 'h'
 
-console.log(get({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'));
+console.log(getValue({ a: { b: [{ c: 'd' }] } }, 'a.b.0.c'));
 //=> 'd'
 
-console.log(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'));
+console.log(getValue({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'));
 //=> 'f'
 ```
 
@@ -85,22 +90,22 @@ console.log(get({ a: { b: [{ c: 'd' }, { e: 'f' }] } }, 'a.b.1.e'));
 function foo() {}
 foo.bar = { baz: 'qux' };
 
-console.log(get(foo));
+console.log(getValue(foo));
 //=> { [Function: foo] bar: { baz: 'qux' } }
 
-console.log(get(foo, 'bar'));
+console.log(getValue(foo, 'bar'));
 //=> { baz: 'qux' }
 
-console.log(get(foo, 'bar.baz'));
+console.log(getValue(foo, 'bar.baz'));
 //=> qux
 ```
 
 ### Supports passing object path as an array
 
-Slighly improve performance by passing an array of strings to use as object path segments (this is also useful when you need to dynamically build up the path segments):
+Slightly improves performance by passing an array of strings to use as object path segments (this is also useful when you need to dynamically build up the path segments):
 
 ```js
-console.log(get({ a: { b: 'c' } }, ['a', 'b']));
+console.log(getValue({ a: { b: 'c' } }, ['a', 'b']));
 //=> 'c'
 ```
 
@@ -116,17 +121,17 @@ The default value to return when get-value cannot resolve a value from the given
 
 ```js
 const obj = { foo: { a: { b: { c: { d: 'e' } } } } };
-console.log(get(obj, 'foo.a.b.c.d', { default: true }));  //=> 'e'
-console.log(get(obj, 'foo.bar.baz', { default: true }));  //=> true
-console.log(get(obj, 'foo.bar.baz', { default: false })); //=> false
-console.log(get(obj, 'foo.bar.baz', { default: null }));  //=> null
+console.log(getValue(obj, 'foo.a.b.c.d', { default: true }));  //=> 'e'
+console.log(getValue(obj, 'foo.bar.baz', { default: true }));  //=> true
+console.log(getValue(obj, 'foo.bar.baz', { default: false })); //=> false
+console.log(getValue(obj, 'foo.bar.baz', { default: null }));  //=> null
 
 // you can also pass the default value as the last argument
 // (this is necessary if the default value is an object)
-console.log(get(obj, 'foo.a.b.c.d', true));  //=> 'e'
-console.log(get(obj, 'foo.bar.baz', true));  //=> true
-console.log(get(obj, 'foo.bar.baz', false)); //=> false
-console.log(get(obj, 'foo.bar.baz', null));  //=> null
+console.log(getValue(obj, 'foo.a.b.c.d', true));  //=> 'e'
+console.log(getValue(obj, 'foo.bar.baz', true));  //=> true
+console.log(getValue(obj, 'foo.bar.baz', false)); //=> false
+console.log(getValue(obj, 'foo.bar.baz', null));  //=> null
 ```
 
 ### options.isValid
@@ -146,14 +151,14 @@ const options = {
 const obj = {};
 Object.defineProperty(obj, 'foo', { value: 'bar', enumerable: false });
 
-console.log(get(obj, 'foo', options));           //=> undefined
-console.log(get({}, 'hasOwnProperty', options)); //=> undefined
-console.log(get({}, 'constructor', options));    //=> undefined
+console.log(getValue(obj, 'foo', options));           //=> undefined
+console.log(getValue({}, 'hasOwnProperty', options)); //=> undefined
+console.log(getValue({}, 'constructor', options));    //=> undefined
 
 // without "isValid" check
-console.log(get(obj, 'foo', options));           //=> bar
-console.log(get({}, 'hasOwnProperty', options)); //=> [Function: hasOwnProperty]
-console.log(get({}, 'constructor', options));    //=> [Function: Object]
+console.log(getValue(obj, 'foo', options));           //=> bar
+console.log(getValue({}, 'hasOwnProperty', options)); //=> [Function: hasOwnProperty]
+console.log(getValue({}, 'constructor', options));    //=> [Function: Object]
 ```
 
 ### options.split
@@ -169,12 +174,12 @@ const obj = { 'a.b': { c: { d: 'e' } } };
 
 // example of using a string to split the object path
 const options = { split: path => path.split('/') };
-console.log(get(obj, 'a.b/c/d', options)); //=> 'e'
+console.log(getValue(obj, 'a.b/c/d', options)); //=> 'e'
 
 // example of using a regex to split the object path
 // (removing escaped dots is unnecessary, this is just an example)
 const options = { split: path => path.split(/\\?\./) };
-console.log(get(obj, 'a\\.b.c.d', options)); //=> 'e'
+console.log(getValue(obj, 'a\\.b.c.d', options)); //=> 'e'
 ```
 
 ### options.separator
@@ -183,15 +188,15 @@ console.log(get(obj, 'a\\.b.c.d', options)); //=> 'e'
 
 **Default**: `.`
 
-The separator to use for spliting the string (this is probably not needed when `options.split` is used).
+The separator to use for splitting the string (this is probably not needed when `options.split` is used).
 
 ```js
 const obj = { 'a.b': { c: { d: 'e' } } };
 
-console.log(get(obj, 'a.b/c/d', { separator: '/' }));
+console.log(getValue(obj, 'a.b/c/d', { separator: '/' }));
 //=> 'e'
 
-console.log(get(obj, 'a\\.b.c.d', { separator: /\\?\./ }));
+console.log(getValue(obj, 'a\\.b.c.d', { separator: /\\?\./ }));
 //=> 'e'
 ```
 
@@ -210,7 +215,7 @@ const options = {
   join: segs => segs.join(segs[0] === 'a' ? '/' : '.')
 };
 
-console.log(get(obj, 'a.b.c.d', options));
+console.log(getValue(obj, 'a.b.c.d', options));
 //=> 'e'
 ```
 
@@ -225,7 +230,7 @@ The character to use when re-joining the string to check for keys with dots in t
 ```js
 const target = { 'a-b': { c: { d: 'e' } } };
 const options = { joinChar: '-' };
-console.log(get(target, 'a.b.c.d', options));
+console.log(getValue(target, 'a.b.c.d', options));
 //=> 'e'
 ```
 
@@ -237,31 +242,31 @@ get-value is more reliable and has more features than dot-prop, without sacrific
 
 ```
 # deep (338 bytes)
-  dot-prop x 2,524,501 ops/sec ±3.47% (90 runs sampled)
-  dotty x 1,990,042 ops/sec ±1.10% (91 runs sampled)
-  get-value x 3,776,247 ops/sec ±0.71% (98 runs sampled)
-  getobject x 1,166,194 ops/sec ±2.94% (94 runs sampled)
-  object-path x 975,380 ops/sec ±0.27% (97 runs sampled)
+  dot-prop x 5,319,159 ops/sec ±0.76% (93 runs sampled)
+  dotty x 3,870,706 ops/sec ±0.26% (96 runs sampled)
+  get-value x 8,788,576 ops/sec ±0.19% (100 runs sampled)
+  getobject x 1,979,207 ops/sec ±0.17% (98 runs sampled)
+  object-path x 1,761,814 ops/sec ±0.25% (100 runs sampled)
 
-  fastest is get-value (by 50% avg)
+  fastest is get-value (by 65% avg)
 
 # root (215 bytes)
-  dot-prop x 18,774,512 ops/sec ±0.67% (95 runs sampled)
-  dotty x 16,732,378 ops/sec ±0.66% (95 runs sampled)
-  get-value x 35,516,146 ops/sec ±1.16% (92 runs sampled)
-  getobject x 7,743,671 ops/sec ±2.99% (95 runs sampled)
-  object-path x 11,955,285 ops/sec ±0.48% (95 runs sampled)
+  dot-prop x 41,761,355 ops/sec ±0.89% (93 runs sampled)
+  dotty x 29,943,256 ops/sec ±0.55% (99 runs sampled)
+  get-value x 65,184,370 ops/sec ±1.00% (96 runs sampled)
+  getobject x 13,780,598 ops/sec ±0.35% (98 runs sampled)
+  object-path x 21,255,148 ops/sec ±0.45% (101 runs sampled)
 
-  fastest is get-value (by 89% avg)
+  fastest is get-value (by 56% avg)
 
 # shallow (91 bytes)
-  dot-prop x 10,195,874 ops/sec ±0.88% (95 runs sampled)
-  dotty x 8,383,019 ops/sec ±0.81% (97 runs sampled)
-  get-value x 9,891,229 ops/sec ±0.88% (90 runs sampled)
-  getobject x 4,333,202 ops/sec ±1.52% (99 runs sampled)
-  object-path x 4,568,894 ops/sec ±1.60% (94 runs sampled)
+  dot-prop x 21,019,241 ops/sec ±0.46% (93 runs sampled)
+  dotty x 15,912,833 ops/sec ±0.76% (96 runs sampled)
+  get-value x 19,824,809 ops/sec ±0.40% (91 runs sampled)
+  getobject x 7,537,059 ops/sec ±0.15% (97 runs sampled)
+  object-path x 8,519,654 ops/sec ±0.21% (99 runs sampled)
 
-  fastest is dot-prop (by 3% avg)
+  fastest is dot-prop (by 6% avg)
 
 ```
 
@@ -281,9 +286,14 @@ $ npm install && node benchmark
 
 ## Release history
 
+### v4.1.0
+
+* Adds support for `Map`-like objects, allowing objects with a `get` method that can be used to retrieve values by key.
+* Removed outdated travis config, and added GitHub Actions workflow for running tests.
+
 ### v4.0.0
 
-* Refactored to typescript
+* Refactored to TypeScript
 * Added support for handling deep property paths with arrays
 * Improved performance on large nested objects
 * Fixed edge case issues with keys containing special characters.
@@ -306,6 +316,8 @@ $ npm install && node benchmark
 <summary><strong>Contributing</strong></summary>
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
+
+Please read the [contributing guide](.github/contributing.md) for advice on opening issues, pull requests, and coding standards.
 
 </details>
 
@@ -347,7 +359,7 @@ You might also be interested in these projects:
 
 | **Commits** | **Contributor** |  
 | --- | --- |  
-| 93 | [jonschlinkert](https://github.com/jonschlinkert) |  
+| 94 | [jonschlinkert](https://github.com/jonschlinkert) |  
 | 2  | [doowb](https://github.com/doowb) |  
 | 2  | [felladrin](https://github.com/felladrin) |  
 | 1  | [onokumus](https://github.com/onokumus) |  
@@ -359,14 +371,14 @@ You might also be interested in these projects:
 **Jon Schlinkert**
 
 * [GitHub Profile](https://github.com/jonschlinkert)
-* [Twitter Profile](https://twitter.com/jonschlinkert)
+* [X Profile](https://x.com/jonschlinkert)
 * [LinkedIn Profile](https://linkedin.com/in/jonschlinkert)
 
 ### License
 
-Copyright © 2025, [Jon Schlinkert](https://github.com/jonschlinkert).
+Copyright © 2026, [Jon Schlinkert](https://github.com/jonschlinkert).
 Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on February 05, 2025._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on June 14, 2026._

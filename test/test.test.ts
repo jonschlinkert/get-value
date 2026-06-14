@@ -16,7 +16,6 @@ const files = pattern => {
 
 if (argv.bench) {
   files(argv.bench).forEach(file => units(require(file)));
-  return;
+} else {
+  units(getValue?.default || getValue);
 }
-
-units(getValue?.default || getValue);

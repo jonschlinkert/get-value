@@ -56,7 +56,7 @@ const isValidObject = (v: unknown): boolean => {
 };
 
 // eslint-disable-next-line complexity
-const getValue = (
+export const getValue = (
   target: unknown,
   path: string | number | string[],
   options: Options = {}
@@ -82,8 +82,13 @@ const getValue = (
     return target;
   }
 
-  if (target[path] !== undefined) {
-    return isValid(path, target, options) ? target[path] : options.default;
+  let value = target[path];
+  if (value === undefined && typeof target.get === 'function') {
+    value = target.get(path);
+  }
+
+  if (value !== undefined) {
+    return isValid(path, target, options) ? value : options.default;
   }
 
   const segs = pathIsArray ? path : split(path, splitChar, options);
@@ -100,25 +105,34 @@ const getValue = (
       prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
     }
 
-    if (target[prop] !== undefined) {
+    value = target[prop];
+    if (value === undefined && typeof target.get === 'function') {
+      value = target.get(prop);
+    }
+
+    if (value !== undefined) {
       if (!isValid(prop, target, options)) {
         return options.default;
       }
 
-      target = target[prop];
+      target = value;
     } else {
       let hasProp = false;
       let n = idx + 1;
 
       while (n < len) {
         prop = join([prop, segs[n++]], joinChar, options);
+        value = target[prop];
+        if (value === undefined && typeof target.get === 'function') {
+          value = target.get(prop);
+        }
 
-        if ((hasProp = target[prop] !== undefined)) {
+        if ((hasProp = value !== undefined)) {
           if (!isValid(prop, target, options)) {
             return options.default;
           }
 
-          target = target[prop];
+          target = value;
           idx = n - 1;
           break;
         }

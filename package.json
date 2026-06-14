@@ -11,20 +11,20 @@
   "license": "MIT",
   "scripts": {
     "bench": "node benchmark",
+    "clean": "rm -rf dist",
+    "cover": "nyc --all --reporter=text --reporter=html --include=src npm run test",
     "eslint": "npx eslint --ext .ts .",
-    "coverage": "nyc --reporter=text --reporter=html",
-    "test": "ts-mocha -r esbuild-register 'test/**/*.ts'",
-    "tsup": "npx tsup"
+    "test": "mocha --import=tsx \"test/**/*.test.ts\" --exit",
+    "tsup": "npm run clean && npx tsup"
   },
   "files": [
-    "dist/index.js",
-    "dist/index.mjs",
-    "index.d.ts"
+    "dist"
   ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "index.d.ts",
   "exports": {
+    "./package": "./package.json",
     ".": {
       "types": "./index.d.ts",
       "import": "./dist/index.mjs",
@@ -32,26 +32,27 @@
     }
   },
   "devDependencies": {
-    "@types/node": "^22.10.7",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "@typescript-eslint/parser": "^6.2.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.9.3",
     "arr-reduce": "^1.0.1",
     "dot-prop": "^9.0.0",
     "dotty": "^0.1.2",
-    "esbuild-register": "^3.5.0",
-    "eslint": "^8.57.0",
+    "eslint": "^10.5.0",
+    "eslint-plugin-import": "^2.32.0",
     "getobject": "^1.1.1",
+    "globals": "^17.6.0",
     "gulp-format-md": "^2.0.0",
-    "micromatch": "^4.0.5",
+    "micromatch": "^4.0.8",
     "minimist": "^1.2.8",
-    "nyc": "^17.1.0",
+    "mocha": "^11.7.6",
+    "nyc": "^18.0.0",
     "object-path": "^0.11.8",
-    "prettier": "^3.4.2",
-    "ts-mocha": "^10.0.0",
-    "ts-node": "^10.9.2",
+    "prettier": "^3.8.4",
     "tsconfig-paths": "^4.2.0",
-    "tsup": "^8.3.5",
-    "typescript": "^5.4.5"
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0"
   },
   "keywords": [
     "get",
@@ -72,6 +73,9 @@
     "run": true,
     "toc": "collapsible",
     "layout": "default",
+    "data": {
+      "workflow": "test.yml"
+    },
     "tasks": [
       "readme"
     ],
