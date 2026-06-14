@@ -38,7 +38,6 @@
     "dot-prop": "^9.0.0",
     "dotty": "^0.1.2",
     "eslint": "^10.5.0",
-    "eslint-plugin-import": "^2.32.0",
     "getobject": "^1.1.1",
     "globals": "^17.6.0",
     "gulp-format-md": "^2.0.0",
